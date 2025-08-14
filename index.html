@@ -4,407 +4,251 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Портфоліо масажиста</title>
-  <style>
-    :root{
-      --bg: #0f172a; /* фон */
-      --panel: rgba(17, 24, 39, 0.8);
-      --text: #fce7f3; /* ніжно-рожевий текст */
-      --muted: #a5b4fc; /* блакитний приглушений */
-      --accent: #f9a8d4; /* рожевий */
-      --accent-2: #93c5fd; /* блакитний */
-      --ok: #f472b6;
-      --warn: #60a5fa;
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",sans-serif;
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(249,168,212,.15), transparent 60%),
-        radial-gradient(1000px 700px at 120% 0%, rgba(147,197,253,.12), transparent 55%),
-        var(--bg);
-      color:var(--text);
-      line-height:1.6;
-    }
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:1100px; margin:0 auto; padding:40px 20px}
-    .card{
-      background: linear-gradient(180deg, rgba(17,24,39,0.7), rgba(17,24,39,0.85));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(6px);
-    }
-
-    /* Hero */
-    .hero{
-      display:grid; gap:24px; grid-template-columns:1.2fr .8fr;
-      align-items:center; padding:28px
-    }
-    .hero h1{
-      font-size:clamp(28px,4vw,44px);
-      line-height:1.15; margin:0;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:14px; color:var(--muted);
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.1)
-    }
-    .hero p{margin:8px 0 0; color:var(--muted)}
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 16px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      transition:.2s; background: rgba(255,255,255,.03);
-    }
-    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.25)}
-    .btn.primary{
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#0b1020; border:none; font-weight:700
-    }
-
-    .portrait{
-      aspect-ratio: 4/5; width:100%;
-      border-radius:16px; overflow:hidden;
-      border:1px solid rgba(255,255,255,.08)
-    }
-    .portrait img{
-      width:100%; height:100%; object-fit:cover; display:block;
-      filter:contrast(1.05) saturate(1.05)
-    }
-
-    /* Sections */
-    .section{margin-top:28px; padding:24px}
-    .section h2{
-      margin:0 0 16px; font-size:clamp(22px,3vw,30px);
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .grid{display:grid; gap:16px}
-    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .grid.cols-3{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:640px){
-      .grid.cols-3,.grid.cols-2{grid-template-columns:1fr}
-    }
-
-    .service,.price,.testimonial,.about,.contacts,.cert{
-      padding:16px; border:1px solid rgba(255,255,255,.08);
-      border-radius:14px; background:rgba(255,255,255,.03)
-    }
-    .service h3, .price h3{margin:6px 0 6px; font-size:18px}
-    .muted{color:var(--muted); font-size:14px}
-    .chip{
-      display:inline-block; padding:4px 8px; border-radius:999px;
-      font-size:12px; border:1px solid rgba(255,255,255,.12);
-      color:var(--muted); margin-right:8px
-    }
-    .pill{
-      display:inline-block; padding:4px 8px; font-size:12px;
-      border-radius:999px;
-      background:linear-gradient(90deg, rgba(249,168,212,.15), rgba(147,197,253,.15));
-      color:#fce7f3
-    }
-    .stars{letter-spacing:1px; color: var(--accent)}
-    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-    .kicker{font-size:12px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
-    .note{font-size:12px; color:var(--muted)}
-    .divider{
-      height:1px;
-      background:linear-gradient(90deg,transparent,rgba(249,168,212,.5),rgba(147,197,253,.5),transparent);
-      margin:12px 0
-    }
-    .chip{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:12px;
-  border:none;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.chip:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-}
-/* ====== Certificates Carousel ("картотека") ====== */
-.cert-carousel{
-  position: relative;
-  padding: 18px 48px; /* місце під кнопки */
-}
-
-.cc-viewport{
-  position: relative;
-  height: clamp(180px, 36vw, 360px);
-  perspective: 1200px;                /* глибина */
-  overflow: visible;
-}
-
-.cc-item{
-  position: absolute;
-  top: 50%; left: 50%;
-  width: clamp(180px, 28vw, 340px);
-  height: calc(clamp(180px, 28vw, 340px) * 0.7);
-  transform-style: preserve-3d;
-  border-radius: 14px;
-  padding: 0; margin: 0;
-  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, filter .3s;
-  will-change: transform;
-  box-shadow: 0 18px 40px rgba(0,0,0,.35);
-  /* тонка градієнтна рамка */
-  outline: 1px solid rgba(255,255,255,.08);
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.06));
-}
-.cc-item img{
-  width: 100%; height: 100%; object-fit: cover; display:block;
-  border-radius: 12px;
-  filter: contrast(1.02) saturate(1.02);
-}
-
-/* активна картка трохи більша/яскравіша */
-.cc-item.is-active{
-  filter: drop-shadow(0 18px 50px rgba(0,0,0,.45));
-}
-
-/* навігація */
-.cc-nav{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border-radius:12px; border:none;
-  cursor:pointer;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color:#0b1020; font-weight:800; font-size:22px;
-  display:grid; place-items:center;
-  box-shadow: var(--shadow);
-}
-.cc-prev{ left:10px; }
-.cc-next{ right:10px; }
-.cc-nav:hover{ filter: brightness(1.05); transform: translateY(-50%) scale(1.03); }
-
-/* адаптив: зменшуємо кнопки */
-@media (max-width:640px){
-  .cert-carousel{ padding: 12px 40px; }
-  .cc-nav{ width:38px; height:38px; font-size:20px; }
-}
-/* ====== Certificates Carousel ====== */
-.cert-carousel {
-  position: relative;
-  padding: 18px 48px;
-  overflow: visible; /* Щоб фото вилазили за межі */
-}
-
-.cc-viewport {
-  position: relative;
-  height: clamp(180px, 36vw, 360px);
-  perspective: 1200px;
-  overflow: visible;
-}
-
-.cc-item {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: clamp(180px, 28vw, 340px);
-  height: calc(clamp(180px, 28vw, 340px) * 0.7);
-  transform-style: preserve-3d;
-  border-radius: 14px;
-  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, filter .3s;
-  box-shadow: 0 18px 40px rgba(0,0,0,.35);
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.06));
-  cursor: pointer;
-}
-.cc-item img {
-  width: 100%; height: 100%; object-fit: cover; display:block;
-  border-radius: 12px;
-}
-
-.cc-item.is-active {
-  filter: drop-shadow(0 18px 50px rgba(0,0,0,.45));
-}
-
-/* кнопки */
-.cc-nav {
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border-radius:12px; border:none;
-  cursor:pointer;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color:#0b1020; font-weight:800; font-size:22px;
-  display:grid; place-items:center;
-  box-shadow: var(--shadow);
-}
-.cc-prev{ left:10px; }
-.cc-next{ right:10px; }
-.cc-nav:hover{ filter: brightness(1.05); transform: translateY(-50%) scale(1.03); }
-/* Відео-решітка */
-.video-grid{
-  display:grid; gap:16px;
-  grid-template-columns:repeat(3,1fr);
-}
-@media (max-width:900px){ .video-grid{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:640px){ .video-grid{ grid-template-columns:1fr; } }
-
-.video-thumb{
-  position:relative; display:block; padding:0; border:none; cursor:pointer; background:none;
-  border-radius:16px; overflow:hidden; text-align:left;
-  box-shadow: var(--shadow);
-  /* градієнтна рамка в темі */
-  border:2px solid transparent;
-  background:
-    linear-gradient(90deg, var(--accent), var(--accent-2)) border-box,
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box;
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-.video-thumb:hover{ transform: translateY(-2px); filter: brightness(1.02); }
-
-.video-thumb img{
-  display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
-}
-
-.vt-title{
-  position:absolute; left:10px; bottom:10px;
-  padding:6px 10px; border-radius:10px;
-  font-size:14px; font-weight:600; color:#0b1020;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  box-shadow: 0 6px 20px rgba(0,0,0,.25);
-}
-
-/* FULLSCREEN модалка з градієнтом теми */
-#videoModal{
-  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-  z-index:1000;
-}
-#videoModal[hidden]{ display:none; }
-.vm-backdrop{
-  position:absolute; inset:0;
-  background:
-    radial-gradient(1000px 600px at 20% 10%, rgba(249,168,212,.20), transparent 60%),
-    radial-gradient(900px 600px at 80% 90%, rgba(147,197,253,.20), transparent 55%),
-    rgba(0,0,0,.75);
-  backdrop-filter: blur(4px);
-}
-.vm-content{
-  position:relative; max-width:min(1100px, 92vw); width:100%;
-  padding:14px; border-radius:18px; background:rgba(17,24,39,.9);
-}
-.vm-close{
-  position:absolute; top:8px; right:10px; width:36px; height:36px;
-  border:none; border-radius:10px; cursor:pointer;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#0b1020;
-  font-size:22px; font-weight:800; line-height:1;
-  box-shadow: var(--shadow);
-}
-.vm-stage{
-  width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden;
-  background:#000; transform: scale(0.5); /* зменшення у 2 рази */
-  transform-origin: center;
-}
-.vm-stage iframe, .vm-stage video{
-  width:100%; height:100%; display:block; border:0; outline:0;
-}
-/* за замовчуванням 16:9, як було */
-.video-thumb img{ aspect-ratio:16/9; object-fit:cover; }
-
-/* для Shorts (вертикальні) */
-.video-thumb[data-aspect="9x16"] img{ aspect-ratio:9/16; }
-
-/* fullscreen сцена: за замовчуванням 16:9 */
-.vm-stage{ aspect-ratio:16/9; }
-
-/* якщо відкрили Shorts — перемикаємо сцену на 9:16 (ставимо клас через JS) */
-.vm-stage.is-vertical{ aspect-ratio:9/16; }
-
-.reviews-section {
-  padding: 40px 20px;
-  background: var(--panel);
-}
-
-.reviews-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-  gap: 16px;
-}
-
-.reviews-grid img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  cursor: pointer;
-  transition: transform .3s ease;
-}
-
-.reviews-grid img:hover {
-  transform: scale(1.05);
-}
-
-/* Адаптив для телефонів */
-@media (max-width: 768px) {
-  .reviews-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+<style>
+  /* ======================
+     ТЕМА / БАЗА
+  ====================== */
+  :root{
+    --bg:#0f172a;
+    --panel:rgba(17,24,39,.8);
+    --text:#fce7f3;
+    --muted:#a5b4fc;
+    --accent:#f9a8d4;
+    --accent-2:#93c5fd;
+    --ok:#f472b6;
+    --warn:#60a5fa;
+    --radius:16px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
   }
-}
-
-@media (max-width: 480px) {
-  .reviews-grid {
-    grid-template-columns: 1fr; /* 1 колонка */
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",sans-serif;
+    background:
+      radial-gradient(1200px 800px at 20% -10%, rgba(249,168,212,.15), transparent 60%),
+      radial-gradient(1000px 700px at 120% 0%, rgba(147,197,253,.12), transparent 55%),
+      var(--bg);
+    color:var(--text); line-height:1.6;
   }
-}
-.map-container {
-  margin-top: 20px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1100px; margin:0 auto; padding:40px 20px}
+  .card{
+    background:linear-gradient(180deg, rgba(17,24,39,.7), rgba(17,24,39,.85));
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(6px);
+  }
+
+  /* ======================
+     HERO
+  ====================== */
+  .hero{display:grid; gap:24px; grid-template-columns:1.2fr .8fr; align-items:center; padding:28px}
+  .hero h1{
+    font-size:clamp(28px,4vw,44px); line-height:1.15; margin:0;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .tag{
+    display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--muted);
+    padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1)
+  }
+  .hero p{margin:8px 0 0; color:var(--muted)}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; padding:12px 16px;
+    border-radius:12px; border:1px solid rgba(255,255,255,.12);
+    transition:.2s; background:rgba(255,255,255,.03);
+  }
+  .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.25)}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#0b1020; border:none; font-weight:700}
+  .portrait{aspect-ratio:4/5; width:93%;
+     border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.08)}
+  .portrait img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:contrast(1.05) saturate(1.05);
+
 }
 
-/* Fullscreen */
-#fullModal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-#fullModal .fs-img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 8px;
-}
-#fullModal .fs-close {
-  position: absolute;
-  top: 20px; right: 30px;
-  font-size: 40px; color: white; cursor: pointer;
-}
-#fullModal .fs-prev,
-#fullModal .fs-next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  font-size: 50px;
-  color: white;
-  padding: 10px;
-  user-select: none;
-}
-#fullModal .fs-prev { left: 30px; }
-#fullModal .fs-next { right: 30px; }
+
+  /* ======================
+     СЕКЦІЇ / СІТКИ
+  ====================== */
+  .section{margin-top:28px; padding:24px}
+  .section h2{
+    margin:0 0 16px; font-size:clamp(22px,3vw,30px);
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .grid{display:grid; gap:16px}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .grid.cols-3{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:640px){
+    .grid.cols-3,.grid.cols-2{grid-template-columns:1fr}
+  }
+
+  /* ======================
+     КОМПОНЕНТИ КАРТОК
+  ====================== */
+  .service,.price,.testimonial,.about,.contacts,.cert{
+    padding:16px; border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.03)
+  }
+  .service h3,.price h3{margin:6px 0 6px; font-size:18px}
+  .muted{color:var(--muted); font-size:14px}
+  .pill{
+    display:inline-block; padding:4px 8px; font-size:12px; border-radius:999px;
+    background:linear-gradient(90deg, rgba(249,168,212,.15), rgba(147,197,253,.15)); color:#fce7f3
+  }
+  .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .kicker{font-size:12px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
+  .note{font-size:12px; color:var(--muted)}
+  .divider{height:1px; background:linear-gradient(90deg,transparent,rgba(249,168,212,.5),rgba(147,197,253,.5),transparent); margin:12px 0}
+
+  /* Градієнтні теги (клікабельні) */
+  .chip{
+    display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px;
+    border:none; background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#fff; font-weight:500; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .chip:hover{transform:translateY(-1px); box-shadow:0 2px 6px rgba(0,0,0,.25)}
+
+  /* ======================
+     АКОРДЕОНИ (details)
+  ====================== */
+  .acc{
+    border:1px solid rgba(255,255,255,.08); border-radius:14px; background:rgba(255,255,255,.03);
+    margin-bottom:12px; overflow:hidden;
+  }
+  .acc>summary{
+    list-style:none; cursor:pointer; padding:12px 14px; font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    display:flex; align-items:center; justify-content:space-between;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#0b1020;
+  }
+  .acc>summary::-webkit-details-marker{display:none}
+  .acc[open]>summary{filter:brightness(1.03)}
+  .acc>summary::after{content:"▾"; font-weight:900; transition:transform .2s ease}
+  .acc[open]>summary::after{transform:rotate(180deg)}
+  .acc>.grid,.acc>.video-grid,.acc>.reviews-grid{padding:14px}
+
+  /* ======================
+     КАРУСЕЛЬ СЕРТИФІКАТІВ (картотека)
+  ====================== */
+  .cert-carousel{position:relative; padding:18px 48px; overflow:visible}
+  .cc-viewport{position:relative; height:clamp(180px,36vw,360px); perspective:1200px; overflow:visible}
+  .cc-item{
+    position:absolute; top:50%; left:50%;
+    width:clamp(180px,28vw,340px); height:calc(clamp(180px,28vw,340px)*0.7);
+    transform-style:preserve-3d; border-radius:14px;
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, filter .3s;
+    box-shadow:0 18px 40px rgba(0,0,0,.35); background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.06));
+    cursor:pointer; outline:1px solid rgba(255,255,255,.08);
+  }
+  .cc-item img{width:100%; height:100%; object-fit:cover; display:block; border-radius:12px; filter:contrast(1.02) saturate(1.02)}
+  .cc-item.is-active{filter:drop-shadow(0 18px 50px rgba(0,0,0,.45))}
+  .cc-nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:44px; height:44px; border-radius:12px; border:none; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#0b1020; font-weight:800; font-size:22px; display:grid; place-items:center; box-shadow:var(--shadow);
+  }
+  .cc-prev{left:10px} .cc-next{right:10px}
+  .cc-nav:hover{filter:brightness(1.05); transform:translateY(-50%) scale(1.03)}
+  @media (max-width:640px){ .cert-carousel{padding:12px 40px} .cc-nav{width:38px; height:38px; font-size:20px} }
+
+  /* ======================
+     ВІДЕО (ґрід мініатюр + модалка)
+  ====================== */
+  .video-grid{display:grid; gap:16px; grid-template-columns:repeat(3,1fr)}
+  @media (max-width:900px){ .video-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .video-grid{grid-template-columns:repeat(2,1fr)} } /* 2 колонки на смартфоні */
+  .video-thumb{
+    position:relative; display:block; padding:0; border:none; cursor:pointer; background:none;
+    border-radius:16px; overflow:hidden; text-align:left; box-shadow:var(--shadow);
+    border:2px solid transparent;
+    background:
+      linear-gradient(90deg,var(--accent),var(--accent-2)) border-box,
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  }
+  .video-thumb:hover{transform:translateY(-2px); filter:brightness(1.02)}
+  .video-thumb img{display:block; width:100%; aspect-ratio:16/9; object-fit:cover}
+  .video-thumb[data-aspect="9x16"] img{aspect-ratio:9/16}
+  .vt-title{
+    position:absolute; left:10px; bottom:10px; padding:6px 10px; border-radius:10px;
+    font-size:14px; font-weight:600; color:#0b1020; background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    box-shadow:0 6px 20px rgba(0,0,0,.25);
+  }
+
+  /* FULLSCREEN відео */
+  #videoModal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1000; padding:16px}
+  #videoModal[hidden]{display:none}
+  .vm-backdrop{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(1000px 600px at 20% 10%, rgba(249,168,212,.20), transparent 60%),
+      radial-gradient(900px 600px at 80% 90%, rgba(147,197,253,.20), transparent 55%),
+      rgba(0,0,0,.85);
+    backdrop-filter: blur(4px);
+  }
+  .vm-content{position:relative; width:min(1000px,94vw); padding:12px; border-radius:18px; background:rgba(17,24,39,.9); box-shadow:var(--shadow)}
+  .vm-close{
+    position:absolute; top:8px; right:10px; width:36px; height:36px; border:none; border-radius:10px; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#0b1020; font-size:22px; font-weight:800; line-height:1; box-shadow:var(--shadow);
+  }
+  .vm-stage{
+    width:100%; border-radius:12px; overflow:hidden; background:#000;
+    aspect-ratio:16/9; transform:scale(0.5); transform-origin:center; /* Зменшено вдвічі */
+  }
+  .vm-stage.is-vertical{aspect-ratio:9/16}
+  .vm-stage iframe,.vm-stage video{width:100%; height:100%; display:block; border:0; outline:0}
+
+  /* ======================
+     ВІДГУКИ (уніфіковані плитки 3→2→2)
+  ====================== */
+  .reviews-grid{display:grid; gap:16px; grid-template-columns:repeat(3,1fr)}
+  @media (max-width:900px){ .reviews-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .reviews-grid{grid-template-columns:repeat(2,1fr)} } /* 2 колонки на смартфоні */
+  .review{
+    position:relative; border-radius:14px; overflow:hidden; aspect-ratio:1/1;
+    border:2px solid transparent;
+    background:
+      linear-gradient(90deg,var(--accent),var(--accent-2)) border-box,
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box;
+    box-shadow:var(--shadow);
+  }
+  .review img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease}
+  .review:hover img{transform:scale(1.05)}
+
+  /* ======================
+     МОДАЛКА СЕРТИФІКАТІВ (fullscreen image)
+  ====================== */
+  #fullModal{position:fixed; inset:0; background:rgba(0,0,0,.9); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px}
+  #fullModal.show{display:flex}
+  #fullModal .fs-img{max-width:90%; max-height:90%; border-radius:8px}
+  #fullModal .fs-close{position:absolute; top:20px; right:30px; font-size:40px; color:#fff; cursor:pointer}
+  #fullModal .fs-prev,#fullModal .fs-next{
+    cursor:pointer; position:absolute; top:50%; font-size:50px; color:#fff; padding:10px; user-select:none
+  }
+  #fullModal .fs-prev{left:30px} #fullModal .fs-next{right:30px}
+
+  /* ======================
+     КОНТАКТИ — карта
+  ====================== */
+  .map-container{margin-top:20px; border-radius:12px; overflow:hidden; box-shadow:var(--shadow)}
+
+  /* ======================
+     ФУТЕР
+  ====================== */
+  .footer{margin:24px 0 8px; text-align:center; color:var(--muted); font-size:12px}
+  /* === REVIEWS: ізольована сітка 3→2 кол. без конфліктів === */
 .reviews-grid.masonry{
   column-count: 3;
   column-gap: 16px;
@@ -424,10 +268,8 @@
 }
 
 
+</style>
 
-
-    .footer{margin:24px 0 8px; text-align:center; color:var(--muted); font-size:12px}
-  </style>
 </head>
 <!-- MODAL: опис процедури -->
 <div id="descModal" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:20px; z-index:50;">
@@ -469,7 +311,7 @@
     <section class="card section">
       <div class="about">
         <div class="kicker">Про мене</div>
-        <p>Сертифікований спеціаліст з класичного, спортивного та міофасціального масажу. Працюю з офісними працівниками, спортсменами та людьми, що мають хронічне напруження. Мета — полегшити біль, покращити рухливість і самопочуття.</p>
+        <p>Дипломований спеціаліст по корекції тіла та обличчя. Допоможу вам стати здоровими та щасливими. Майстер з медичною і психологічною освітою.</p>
         <div class="row">
           <span class="pill">Стерильність та безпека</span>
           <span class="pill">Гіпоалергенні олії</span>
@@ -479,14 +321,16 @@
     </section>
 
     <!-- ПОСЛУГИ -->
-   <!-- ПОСЛУГИ -->
 <section class="card section">
   <h2>Послуги</h2>
 
   <!-- МАСАЖІ ТІЛА -->
-  <h3 style="margin:8px 0 10px;">Масажі тіла</h3>
+   <h3 style="margin:8px 0 10px;">Масажі тіла</h3>
+    <details class="acc" open>
+    <summary>Переглянути</summary>
   <div class="grid cols-3">
     <!-- Класичний масаж спини -->
+
     <div class="service">
       <div class="kicker">40 хв</div>
       <h3>Класичний масаж спини</h3>
@@ -517,7 +361,7 @@
       <p class="muted">Комплексне опрацювання спини, рук, ніг, стоп.</p>
       <div class="divider"></div>
       <div class="row">
-        <button class="chip desc" data-title="Загальний масаж (без обличчя)" data-desc="Повний релакс тіла: покращує тонус, лімфовідтік, зменшує набряки та втому. Комбінуються розслаблювальні та тонізуючі техніки.">Комплекс</button>
+        <button class="chip desc" data-title="Загальний масаж (без обличчя)" data-desc="Процедура: покращує тонус, лімфовідтік, зменшує набряки та втому. Комбінуються розслаблювальні та тонізуючі техніки.">Комплекс</button>
         <button class="chip desc" data-title="Загальний масаж (без обличчя)" data-desc="Підходить для регулярного догляду та профілактики болю у м’язах.">Профілактика</button>
       </div>
     </div>
@@ -542,7 +386,7 @@
       <div class="divider"></div>
       <div class="row">
         <button class="chip desc" data-title="Антицелулітний 2 зони" data-desc="Інтенсивні прийоми для покращення трофіки тканин і зменшення проявів «апельсинової шкірки» на вибраних ділянках (стегна, сідниці, живіт).">Локально</button>
-        <button class="chip desc" data-title="Антицелулітний 2 зони" data-desc="Поєднується з домашнім режимом догляду для стабільного ефекту.">Тонізація</button>
+        <button class="chip desc" data-title="Антицелулітний 2 зони" data-desc="Поєднується обгортаннями для покращення тургору шкіри.">Тонізація</button>
       </div>
     </div>
 
@@ -554,7 +398,7 @@
       <div class="divider"></div>
       <div class="row">
         <button class="chip desc" data-title="Антицелулітний 4 зони" data-desc="Комплексне опрацювання проблемних ділянок, лімфодренаж, прискорення обмінних процесів, вирівнювання рельєфу.">Комплекс</button>
-        <button class="chip desc" data-title="Антицелулітний 4 зони" data-desc="Рекомендовано курсом (8–12 сеансів) для вираженого ефекту.">Курс</button>
+        <button class="chip desc" data-title="Антицелулітний 4 зони" data-desc="Рекомендовано курсом (5–12 сеансів) для вираженого ефекту.">Курс</button>
       </div>
     </div>
 
@@ -578,7 +422,7 @@
       <div class="divider"></div>
       <div class="row">
         <button class="chip desc" data-title="Лімфодренажний (без обличчя)" data-desc="М’які ритмічні техніки для запуску лімфовідтоку, покращення детоксикації та зняття перенавантаження з ніг.">Антинабряк</button>
-        <button class="chip desc" data-title="Лімфодренажний (без обличчя)" data-desc="Рекомендовано після перельотів, при схильності до набряків, у програмі схуднення.">Легкі ноги</button>
+        <button class="chip desc" data-title="Лімфодренажний (без обличчя)" data-desc="Рекомендовано після тривалого перебування на ногах, при схильності до набряків, у програмі схуднення.">Легкі ноги</button>
       </div>
     </div>
 
@@ -677,10 +521,62 @@
         <button class="chip desc" data-title="Спортивний масаж" data-desc="Покращує еластичність, прискорює відновлення, готує до стартів.">Підготовка</button>
       </div>
     </div>
+    <!-- ФІТНЕС МАСАЖ (антицелулітний з фітнес-резинками) -->
+<div class="service">
+  <div class="kicker">45–60 хв</div>
+  <h3>Фітнес масаж</h3>
+  <p class="muted">Антицелулітний масаж із використанням фітнес-резинок: еластичний опір + помпові рухи для кращого дренажу й тонусу шкіри.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Фітнес масаж"
+      data-desc="Антицелулітна техніка з використанням фітнес-резинок: комбінація тягових та помпових рухів прискорює мікроциркуляцію, лімфовідтік і підвищує тонус шкіри. Ідеально для опрацювання стегон, сідниць і живота.">
+      Фітнес-резинки
+    </button>
+    <button class="chip desc"
+      data-title="Фітнес масаж"
+      data-desc="Інтенсивний локальний вплив на «апельсинову шкірку»: механічна стимуляція + еластичний опір допомагають вирівняти рельєф і зменшити набряк.">
+      Антицелуліт
+    </button>
+    <button class="chip desc"
+      data-title="Фітнес масаж"
+      data-desc="Темп середній/швидкий; відчуття глибокої роботи без зайвого дискомфорту. Рекомендовано курсом 8–12 сеансів із домашнім доглядом.">
+      Динамічний дренаж
+    </button>
   </div>
+</div>
+
+<!-- МАСАЖ У 4 РУКИ -->
+<div class="service">
+  <div class="kicker">1 год</div>
+  <h3>Масаж у 4 руки</h3>
+  <p class="muted">Двоє майстрів працюють синхронно дзеркальними техніками — максимальний релакс і глибоке розслаблення за коротший час.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Масаж у 4 руки"
+      data-desc="Двоє майстрів працюють синхронно дзеркальними техніками: нервова система швидше відпускає напругу, а м’язи рівномірно розслабляються.">
+      Синхрон
+    </button>
+    <button class="chip desc"
+      data-title="Масаж у 4 руки"
+      data-desc="Паралельне опрацювання верхньої та нижньої половини тіла дає відчуття «повного занурення» та глибокого прогріву без перевантаження.">
+      Глибоке занурення
+    </button>
+    <button class="chip desc"
+      data-title="Масаж у 4 руки"
+      data-desc="Скорочує час досягнення ефекту: релакс, зняття стресу, опрацювання тригерних зон за один сеанс. Ідеально як преміум-ритуал.">
+      Подвійна ефективність
+    </button>
+  </div>
+</div>
+  </div>
+  </details>
 
   <!-- МАСАЖІ ОБЛИЧЧЯ -->
-  <h3 style="margin:18px 0 10px;">Масажі обличчя</h3>
+     <h3 style="margin:18px 0 10px;">Масажі обличчя</h3>
+<details class="acc" open>
+    <summary>Переглянути</summary>
   <div class="grid cols-3">
     <!-- Класичний обличчя -->
     <div class="service">
@@ -754,9 +650,11 @@
       </div>
     </div>
   </div>
-
+</details>
   <!-- КОМПЛЕКСИ ДЛЯ ТІЛА -->
-  <h3 style="margin:18px 0 10px;">Комплекси для тіла</h3>
+     <h3 style="margin:18px 0 10px;">Комплекси для тіла</h3>
+<details class="acc" open>
+    <summary>Переглянути</summary>
   <div class="grid cols-3">
     <!-- Моделюючий комплекс для тіла -->
     <div class="service">
@@ -770,9 +668,11 @@
       </div>
     </div>
   </div>
-
+</details>
   <!-- ДОДАТКОВІ ПРОЦЕДУРИ -->
-  <h3 style="margin:18px 0 10px;">Додаткові процедури</h3>
+     <h3 style="margin:18px 0 10px;">Додаткові процедури</h3>
+<details class="acc" open>
+    <summary>Переглянути</summary>
   <div class="grid cols-3">
     <div class="service">
       <div class="kicker">15 хв</div>
@@ -874,9 +774,11 @@
       </div>
     </div>
   </div>
-
+</details>
   <!-- SPA КОМПЛЕКСИ -->
-  <h3 style="margin:18px 0 10px;">SPA-комплекси</h3>
+   <h3 style="margin:18px 0 10px;">SPA-комплекси</h3>
+<details class="acc" open>
+    <summary>Переглянути</summary>
   <div class="grid cols-3">
     <div class="service">
       <div class="kicker">≈ 2 год</div>
@@ -907,7 +809,129 @@
         <button class="chip desc" data-title="Сила природи" data-desc="Тепло, аромати трав і мінерали — глибоке розслаблення, детокс і відновлення енергії.">Еко-ритуал</button>
       </div>
     </div>
+    <!-- ПІНЕ СПА (фітобочка, кесе, пінний масаж, чаювання) -->
+<div class="service">
+  <div class="kicker">≈ 1,5 год</div>
+  <h3>Піне спа</h3>
+  <p class="muted">Фітобочка для глибокого прогріву, скрабування рукавичкою кесе та пінний масаж всього тіла. Завершення — ароматне чаювання.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Піне спа"
+      data-desc="Фітобочка делікатно прогріває тіло, розкриває пори, покращує мікроциркуляцію та підсилює ефект усіх наступних етапів SPA.">
+      Фітобочка
+    </button>
+    <button class="chip desc"
+      data-title="Піне спа"
+      data-desc="Скрабування рукавичкою кесе (хаммам-ритуал): м’яке відлущення, рівний тон і шовковиста шкіра без подразнень.">
+      Кесе-скраб
+    </button>
+    <button class="chip desc"
+      data-title="Піне спа"
+      data-desc="Пінний масаж — легкі ковзні техніки у хмарі піни знижують напругу, зволожують і дарують відчуття повного релаксу.">
+      Пінний масаж
+    </button>
+    <button class="chip desc"
+      data-title="Піне спа"
+      data-desc="Завершуємо теплим трав’яним чаєм: м’який детокс, стабілізація стану після терморитуалу, приємне завершення SPA.">
+      Чаювання
+    </button>
   </div>
+</div>
+
+<!-- БАУНТІ (фітобочка, кокосовий скраб, шоколадне обгортання, релакс, догляд обличчя/ручок/ніжок, чаювання) -->
+<div class="service">
+  <div class="kicker">≈ 2,5 год</div>
+  <h3>Баунті</h3>
+  <p class="muted">Тропічний догляд: фітобочка, кокосовий скраб, шоколадне обгортання, релакс масаж з обличчям, кокосове зволоження рук/ніг і маска на обличчя. Чаювання наприкінці.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Баунті"
+      data-desc="Кокосовий скраб дбайливо полірує шкіру, живить жирними кислотами, робить її гладенькою та сяйливою.">
+      Кокосовий скраб
+    </button>
+    <button class="chip desc"
+      data-title="Баунті"
+      data-desc="Шоколадне обгортання — антиоксидантний заряд, м’який ліфтинг та гарний настрій завдяки ароматерапевтичному ефекту какао.">
+      Шоколадне обгортання
+    </button>
+    <button class="chip desc"
+      data-title="Баунті"
+      data-desc="Релакс масаж всього тіла з обличчям: повне розслаблення, зняття стресу, покращення настрою та якості сну.">
+      Релакс + обличчя
+    </button>
+    <button class="chip desc"
+      data-title="Баунті"
+      data-desc="Кокосове зволоження ручок і ніжок + зволожуюча маска на обличчя — шкіра м’яка, живлена, з приємним тропічним ароматом.">
+      Кокосовий догляд
+    </button>
+    <button class="chip desc"
+      data-title="Баунті"
+      data-desc="Тепле чаювання для приємного завершення: легкий детокс і повернення до спокійного тонусу.">
+      Чаювання
+    </button>
+  </div>
+</div>
+
+<!-- ЗАРЯД ЕНЕРГІЇ (фітобочка, звуко- та аромотерапія, стабілізація співочою чашею) -->
+<div class="service">
+  <div class="kicker">≈ 1,5 год</div>
+  <h3>Заряд енергії</h3>
+  <p class="muted">Фітобочка, аромотерапія та звукова терапія зі співочою чашею — для перезавантаження нервової системи, збалансування та ясності.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Заряд енергії"
+      data-desc="Аромотерапія з підібраною сумішшю ефірних олій допомагає сфокусуватися, зняти втому та ментальну напругу.">
+      Аромо-підтримка
+    </button>
+    <button class="chip desc"
+      data-title="Заряд енергії"
+      data-desc="Звукова терапія: вібрації співочої чаші вирівнюють внутрішні ритми, зменшують тривожність і повертають відчуття ресурсу.">
+      Співоча чаша
+    </button>
+    <button class="chip desc"
+      data-title="Заряд енергії"
+      data-desc="Фітобочка активує кровообіг, прогріває м’язи, прискорює відновлення — ідеальний старт для енергетичного комплексу.">
+      Фітобочка
+    </button>
+  </div>
+</div>
+
+
+<!-- БЛАКИТНА ЛАГУНА (фітобочка, мінеральний скраб, таласотерапія, водоростеве зволоження, чаювання) -->
+<div class="service">
+  <div class="kicker">≈ 2 год</div>
+  <h3>Блакитна лагуна</h3>
+  <p class="muted">Морський ритуал: мінеральний скраб, таласотерапія та зволоження тіла водоростевою витяжкою. Початок — фітобочка, фінал — чаювання.</p>
+  <div class="divider"></div>
+  <div class="row">
+    <button class="chip desc"
+      data-title="Блакитна лагуна"
+      data-desc="Мінеральний скраб м’яко відлущує, насичує мікроелементами, готує шкіру до подальших морських процедур.">
+      Мінеральний скраб
+    </button>
+    <button class="chip desc"
+      data-title="Блакитна лагуна"
+      data-desc="Таласотерапія: морські екстракти допомагають утримувати вологу, підвищують тонус і покращують текстуру шкіри.">
+      Таласотерапія
+    </button>
+    <button class="chip desc"
+      data-title="Блакитна лагуна"
+      data-desc="Завершальне зволоження водоростевою витяжкою — тривалий ефект м’якості та еластичності, приємний морський фреш.">
+      Водоростеве зволоження
+    </button>
+    <button class="chip desc"
+      data-title="Блакитна лагуна"
+      data-desc="Чаювання для м’якого повернення до звичного ритму після глибокого розслаблення.">
+      Чаювання
+    </button>
+  </div>
+</div>
+
+  </div>
+</details>
 </section>
 
 
@@ -953,7 +977,8 @@
 <!-- ВІДЕО РОБОТИ -->
 <section class="card section">
   <h2>Відео роботи</h2>
-
+<details class="acc" open>
+    <summary>Переглянути відео</summary>
   <div class="video-grid">
     <!-- YouTube приклади: заміни ID -->
     <button class="video-thumb" data-type="youtube" data-yid="e5JdTlZmzJw" data-aspect="9x16">
@@ -995,7 +1020,7 @@
     <span class="vt-title">Корекція обличчя</span>
     </button>
   </div>
-  
+</details>
 </section>
 
 <!-- FULLSCREEN відео -->
@@ -1010,20 +1035,23 @@
 
 
     <!-- ВІДГУКИ -->
-    <section id="reviews" class="reviews-section">
+  <section class="card section">
   <h2>Відгуки</h2>
+  <details class="acc" open>
+    <summary>Переглянути відгуки</summary>
   <div class="reviews-grid masonry">
-    <img src="res/review1.jpg" alt="Відгук 1" class="review" loading="lazy">
-    <img src="res/review2.jpg" alt="Відгук 2"class="review" loading="lazy">
-    <img src="res/review3.jpg" alt="Відгук 3"class="review" loading="lazy">
-    <img src="res/review4.jpg" alt="Відгук 4"class="review" loading="lazy">
-    <img src="res/review5.jpg" alt="Відгук 5"class="review" loading="lazy">
-    <img src="res/review6.jpg" alt="Відгук 6"class="review" loading="lazy">
-    <img src="res/review7.jpg" alt="Відгук 6"class="review" loading="lazy">
-    <img src="res/review8.jpg" alt="Відгук 6"class="review" loading="lazy">
-    <img src="res/review9.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img  class="m-item" src="res/review1.jpg" alt="Відгук 1" class="review" loading="lazy">
+    <img class="m-item" src="res/review2.jpg" alt="Відгук 2"class="review" loading="lazy">
+    <img class="m-item" src="res/review3.jpg" alt="Відгук 3"class="review" loading="lazy">
+    <img class="m-item" src="res/review4.jpg" alt="Відгук 4"class="review" loading="lazy">
+    <img class="m-item" src="res/review5.jpg" alt="Відгук 5"class="review" loading="lazy">
+    <img class="m-item" src="res/review6.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img class="m-item" src="res/review7.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img class="m-item" src="res/review8.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img class="m-item" src="res/review9.jpg" alt="Відгук 6"class="review" loading="lazy">
     <!-- Додавай ще фото -->
   </div>
+</details>
 </section>
 
 
@@ -1392,6 +1420,51 @@
     if (modal.hidden) return;
     if (e.key === 'Escape') closeModal();
   });
+})();
+(function(){
+  // Авто-відкриття/закриття акордеонів залежно від ширини
+  const ACC_BREAKPOINT = 900;
+  const accs = Array.from(document.querySelectorAll('details.acc'));
+
+  function applyAccordionMode(){
+    const isMobile = window.innerWidth <= ACC_BREAKPOINT;
+    accs.forEach(d => {
+      if (isMobile) {
+        // якщо не взаємодіяли — схлопнемо
+        if (!d.dataset.touched) d.removeAttribute('open');
+      } else {
+        d.setAttribute('open','');
+      }
+    });
+  }
+
+  accs.forEach(d => {
+    d.addEventListener('toggle', () => d.dataset.touched = '1'); // позначаємо, що юзер взаємодіяв
+  });
+
+  window.addEventListener('resize', applyAccordionMode);
+  window.addEventListener('orientationchange', applyAccordionMode);
+  applyAccordionMode();
+
+  // --- Уніфіковане вмикання модалок (якщо десь inline-стилі заважали центруванню) ---
+  // ОПИС ПРОЦЕДУР
+  const descModal = document.getElementById('descModal');
+  if (descModal){
+    // коли відкриваєш — ставимо display:flex
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip.desc');
+      if (!btn) return;
+      descModal.style.display = 'flex';
+    });
+    // закриття вже є у твоєму коді — він просто міняє display:none
+  }
+
+  // СЕРТИФІКАТИ fullModal — якщо у тебе був інший display
+  const fullModal = document.getElementById('fullModal');
+  if (fullModal){
+    // приклад: при відкритті додай клас .show, при закритті — прибери
+    // (якщо ти вже робиш це в існуючому коді — залиш все як є)
+  }
 })();
   </script>
 </body>
