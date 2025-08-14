@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Портфоліо масажиста</title>
+  <style>
+    :root{
+      --bg: #0f172a; /* фон */
+      --panel: rgba(17, 24, 39, 0.8);
+      --text: #fce7f3; /* ніжно-рожевий текст */
+      --muted: #a5b4fc; /* блакитний приглушений */
+      --accent: #f9a8d4; /* рожевий */
+      --accent-2: #93c5fd; /* блакитний */
+      --ok: #f472b6;
+      --warn: #60a5fa;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(249,168,212,.15), transparent 60%),
+        radial-gradient(1000px 700px at 120% 0%, rgba(147,197,253,.12), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1100px; margin:0 auto; padding:40px 20px}
+    .card{
+      background: linear-gradient(180deg, rgba(17,24,39,0.7), rgba(17,24,39,0.85));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+
+    /* Hero */
+    .hero{
+      display:grid; gap:24px; grid-template-columns:1.2fr .8fr;
+      align-items:center; padding:28px
+    }
+    .hero h1{
+      font-size:clamp(28px,4vw,44px);
+      line-height:1.15; margin:0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:14px; color:var(--muted);
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.1)
+    }
+    .hero p{margin:8px 0 0; color:var(--muted)}
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      transition:.2s; background: rgba(255,255,255,.03);
+    }
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.25)}
+    .btn.primary{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#0b1020; border:none; font-weight:700
+    }
+
+    .portrait{
+      aspect-ratio: 4/5; width:100%;
+      border-radius:16px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .portrait img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      filter:contrast(1.05) saturate(1.05)
+    }
+
+    /* Sections */
+    .section{margin-top:28px; padding:24px}
+    .section h2{
+      margin:0 0 16px; font-size:clamp(22px,3vw,30px);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .grid{display:grid; gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid.cols-3{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      .grid.cols-3,.grid.cols-2{grid-template-columns:1fr}
+    }
+
+    .service,.price,.testimonial,.about,.contacts,.cert{
+      padding:16px; border:1px solid rgba(255,255,255,.08);
+      border-radius:14px; background:rgba(255,255,255,.03)
+    }
+    .service h3, .price h3{margin:6px 0 6px; font-size:18px}
+    .muted{color:var(--muted); font-size:14px}
+    .chip{
+      display:inline-block; padding:4px 8px; border-radius:999px;
+      font-size:12px; border:1px solid rgba(255,255,255,.12);
+      color:var(--muted); margin-right:8px
+    }
+    .pill{
+      display:inline-block; padding:4px 8px; font-size:12px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(249,168,212,.15), rgba(147,197,253,.15));
+      color:#fce7f3
+    }
+    .stars{letter-spacing:1px; color: var(--accent)}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .kicker{font-size:12px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase}
+    .note{font-size:12px; color:var(--muted)}
+    .divider{
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(249,168,212,.5),rgba(147,197,253,.5),transparent);
+      margin:12px 0
+    }
+    .chip{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  border:none;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+/* ====== Certificates Carousel ("картотека") ====== */
+.cert-carousel{
+  position: relative;
+  padding: 18px 48px; /* місце під кнопки */
+}
+
+.cc-viewport{
+  position: relative;
+  height: clamp(180px, 36vw, 360px);
+  perspective: 1200px;                /* глибина */
+  overflow: visible;
+}
+
+.cc-item{
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(180px, 28vw, 340px);
+  height: calc(clamp(180px, 28vw, 340px) * 0.7);
+  transform-style: preserve-3d;
+  border-radius: 14px;
+  padding: 0; margin: 0;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, filter .3s;
+  will-change: transform;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  /* тонка градієнтна рамка */
+  outline: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.06));
+}
+.cc-item img{
+  width: 100%; height: 100%; object-fit: cover; display:block;
+  border-radius: 12px;
+  filter: contrast(1.02) saturate(1.02);
+}
+
+/* активна картка трохи більша/яскравіша */
+.cc-item.is-active{
+  filter: drop-shadow(0 18px 50px rgba(0,0,0,.45));
+}
+
+/* навігація */
+.cc-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:12px; border:none;
+  cursor:pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color:#0b1020; font-weight:800; font-size:22px;
+  display:grid; place-items:center;
+  box-shadow: var(--shadow);
+}
+.cc-prev{ left:10px; }
+.cc-next{ right:10px; }
+.cc-nav:hover{ filter: brightness(1.05); transform: translateY(-50%) scale(1.03); }
+
+/* адаптив: зменшуємо кнопки */
+@media (max-width:640px){
+  .cert-carousel{ padding: 12px 40px; }
+  .cc-nav{ width:38px; height:38px; font-size:20px; }
+}
+/* ====== Certificates Carousel ====== */
+.cert-carousel {
+  position: relative;
+  padding: 18px 48px;
+  overflow: visible; /* Щоб фото вилазили за межі */
+}
+
+.cc-viewport {
+  position: relative;
+  height: clamp(180px, 36vw, 360px);
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.cc-item {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(180px, 28vw, 340px);
+  height: calc(clamp(180px, 28vw, 340px) * 0.7);
+  transform-style: preserve-3d;
+  border-radius: 14px;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s, filter .3s;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.06));
+  cursor: pointer;
+}
+.cc-item img {
+  width: 100%; height: 100%; object-fit: cover; display:block;
+  border-radius: 12px;
+}
+
+.cc-item.is-active {
+  filter: drop-shadow(0 18px 50px rgba(0,0,0,.45));
+}
+
+/* кнопки */
+.cc-nav {
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:12px; border:none;
+  cursor:pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color:#0b1020; font-weight:800; font-size:22px;
+  display:grid; place-items:center;
+  box-shadow: var(--shadow);
+}
+.cc-prev{ left:10px; }
+.cc-next{ right:10px; }
+.cc-nav:hover{ filter: brightness(1.05); transform: translateY(-50%) scale(1.03); }
+/* Відео-решітка */
+.video-grid{
+  display:grid; gap:16px;
+  grid-template-columns:repeat(3,1fr);
+}
+@media (max-width:900px){ .video-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px){ .video-grid{ grid-template-columns:1fr; } }
+
+.video-thumb{
+  position:relative; display:block; padding:0; border:none; cursor:pointer; background:none;
+  border-radius:16px; overflow:hidden; text-align:left;
+  box-shadow: var(--shadow);
+  /* градієнтна рамка в темі */
+  border:2px solid transparent;
+  background:
+    linear-gradient(90deg, var(--accent), var(--accent-2)) border-box,
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.video-thumb:hover{ transform: translateY(-2px); filter: brightness(1.02); }
+
+.video-thumb img{
+  display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
+}
+
+.vt-title{
+  position:absolute; left:10px; bottom:10px;
+  padding:6px 10px; border-radius:10px;
+  font-size:14px; font-weight:600; color:#0b1020;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+
+/* FULLSCREEN модалка з градієнтом теми */
+#videoModal{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  z-index:1000;
+}
+#videoModal[hidden]{ display:none; }
+.vm-backdrop{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(1000px 600px at 20% 10%, rgba(249,168,212,.20), transparent 60%),
+    radial-gradient(900px 600px at 80% 90%, rgba(147,197,253,.20), transparent 55%),
+    rgba(0,0,0,.75);
+  backdrop-filter: blur(4px);
+}
+.vm-content{
+  position:relative; max-width:min(1100px, 92vw); width:100%;
+  padding:14px; border-radius:18px; background:rgba(17,24,39,.9);
+}
+.vm-close{
+  position:absolute; top:8px; right:10px; width:36px; height:36px;
+  border:none; border-radius:10px; cursor:pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#0b1020;
+  font-size:22px; font-weight:800; line-height:1;
+  box-shadow: var(--shadow);
+}
+.vm-stage{
+  width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden;
+  background:#000; transform: scale(0.5); /* зменшення у 2 рази */
+  transform-origin: center;
+}
+.vm-stage iframe, .vm-stage video{
+  width:100%; height:100%; display:block; border:0; outline:0;
+}
+/* за замовчуванням 16:9, як було */
+.video-thumb img{ aspect-ratio:16/9; object-fit:cover; }
+
+/* для Shorts (вертикальні) */
+.video-thumb[data-aspect="9x16"] img{ aspect-ratio:9/16; }
+
+/* fullscreen сцена: за замовчуванням 16:9 */
+.vm-stage{ aspect-ratio:16/9; }
+
+/* якщо відкрили Shorts — перемикаємо сцену на 9:16 (ставимо клас через JS) */
+.vm-stage.is-vertical{ aspect-ratio:9/16; }
+
+.reviews-section {
+  padding: 40px 20px;
+  background: var(--panel);
+}
+
+.reviews-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+  gap: 16px;
+}
+
+.reviews-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: transform .3s ease;
+}
+
+.reviews-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Адаптив для телефонів */
+@media (max-width: 768px) {
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+  }
+}
+
+@media (max-width: 480px) {
+  .reviews-grid {
+    grid-template-columns: 1fr; /* 1 колонка */
+  }
+}
+.map-container {
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* Fullscreen */
+#fullModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+#fullModal .fs-img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+#fullModal .fs-close {
+  position: absolute;
+  top: 20px; right: 30px;
+  font-size: 40px; color: white; cursor: pointer;
+}
+#fullModal .fs-prev,
+#fullModal .fs-next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  font-size: 50px;
+  color: white;
+  padding: 10px;
+  user-select: none;
+}
+#fullModal .fs-prev { left: 30px; }
+#fullModal .fs-next { right: 30px; }
+.reviews-grid.masonry{
+  column-count: 3;
+  column-gap: 16px;
+}
+@media (max-width:900px){ .reviews-grid.masonry{ column-count: 2; } }
+@media (max-width:640px){ .reviews-grid.masonry{ column-count: 1; } }
+
+.m-item{
+  width:100%; display:block; margin:0 0 16px;
+  border-radius:14px;
+  border:2px solid transparent;
+  background:
+    linear-gradient(90deg, var(--accent), var(--accent-2)) border-box,
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) padding-box;
+  box-shadow: var(--shadow);
+  break-inside: avoid;
+}
+
+
+
+
+    .footer{margin:24px 0 8px; text-align:center; color:var(--muted); font-size:12px}
+  </style>
+</head>
+<!-- MODAL: опис процедури -->
+<div id="descModal" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:20px; z-index:50;">
+  <div id="descBackdrop" style="position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(2px);"></div>
+  <div class="card" style="position:relative; max-width:640px; width:100%; padding:20px;">
+    <h3 id="descTitle" style="margin:0 32px 6px 0; font-size:22px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></h3>
+    <p id="descText" class="muted" style="margin:0 0 12px;"></p>
+    <div class="row">
+      <button id="closeDesc" class="btn" aria-label="Закрити">Закрити</button>
+    </div>
+  </div>
+</div>
+
+<body>
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="card hero">
+      <div>
+        <span class="tag">👐 <strong>Масаж</strong> • Релакс • Відновлення</span>
+        <h1>Марчук Аліна — сертифікований масажист та реабілітолог</h1>
+        <p>Працюю з болем у спині й шиї, знімаю м’язову напругу, допомагаю відновитися після тренувань. Індивідуальний підхід, чистота та турбота про кожного клієнта.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://t.me/+380979455498" target="_blank" rel="noopener">Написати у Telegram</a>
+
+          <a class="btn" href="tel:+380 97 945 54 98">Подзвонити</a>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <span class="chip">Досвід 5+ років</span>
+          <span class="chip">Вінниця</span>
+        </div>
+      </div>
+      <figure class="portrait">
+        <!-- Заміни посилання нижче на своє фото -->
+        <img src="res/port.png" alt="Масажист за роботою" />
+      </figure>
+    </section>
+
+    <!-- ПРО МЕНЕ -->
+    <section class="card section">
+      <div class="about">
+        <div class="kicker">Про мене</div>
+        <p>Сертифікований спеціаліст з класичного, спортивного та міофасціального масажу. Працюю з офісними працівниками, спортсменами та людьми, що мають хронічне напруження. Мета — полегшити біль, покращити рухливість і самопочуття.</p>
+        <div class="row">
+          <span class="pill">Стерильність та безпека</span>
+          <span class="pill">Гіпоалергенні олії</span>
+          <span class="pill">Гнучкий графік</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПОСЛУГИ -->
+   <!-- ПОСЛУГИ -->
+<section class="card section">
+  <h2>Послуги</h2>
+
+  <!-- МАСАЖІ ТІЛА -->
+  <h3 style="margin:8px 0 10px;">Масажі тіла</h3>
+  <div class="grid cols-3">
+    <!-- Класичний масаж спини -->
+    <div class="service">
+      <div class="kicker">40 хв</div>
+      <h3>Класичний масаж спини</h3>
+      <p class="muted">Розслаблення, зняття напруги у зоні спини та шиї.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Класичний масаж спини" data-desc="Базові прийоми (погладжування, розтирання, розминання) для зняття напруги, покращення кровообігу та рухливості у грудному й поперековому відділах. Рекомендовано при сидячій роботі й хронічних спазмах.">Спина</button>
+        <button class="chip desc" data-title="Класичний масаж спини" data-desc="Делікатна робота з шийно-комірцевою зоною для зменшення головних болів напруження та затиснень трапецієподібних м’язів.">Шийно-комірцева</button>
+      </div>
+    </div>
+
+    <!-- Масаж ШКЗ -->
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Масаж ШКЗ</h3>
+      <p class="muted">Шийно-комірцева зона — швидке зняття затиснень.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Масаж ШКЗ" data-desc="Спрямовано на комірцеву зону та плечі: зменшує втому, покращує кровопостачання голови та знімає напруження, пов’язане з роботою за комп’ютером.">ШКЗ</button>
+        <button class="chip desc" data-title="Масаж ШКЗ" data-desc="Актуально при головних болях, «важкій» голові, скутій шиї, порушенні постави.">Антистрес</button>
+      </div>
+    </div>
+
+    <!-- Загальний масаж без обличчя -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Загальний масаж всього тіла (без обличчя)</h3>
+      <p class="muted">Комплексне опрацювання спини, рук, ніг, стоп.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Загальний масаж (без обличчя)" data-desc="Повний релакс тіла: покращує тонус, лімфовідтік, зменшує набряки та втому. Комбінуються розслаблювальні та тонізуючі техніки.">Комплекс</button>
+        <button class="chip desc" data-title="Загальний масаж (без обличчя)" data-desc="Підходить для регулярного догляду та профілактики болю у м’язах.">Профілактика</button>
+      </div>
+    </div>
+
+    <!-- Загальний масаж з обличчям -->
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Загальний масаж всього тіла (з обличчям)</h3>
+      <p class="muted">Додається делікатний масаж обличчя для повного відновлення.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Загальний масаж (з обличчям)" data-desc="Поглиблений релакс із завершенням на обличчі — знімає набряклість, покращує колір шкіри та дає відчуття «легкої голови».">Повний релакс</button>
+        <button class="chip desc" data-title="Загальний масаж (з обличчям)" data-desc="Рекомендовано при перевтомі, стресі, безсонні.">Антистрес</button>
+      </div>
+    </div>
+
+    <!-- Антицелулітний 2 зони -->
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Антицелулітний масаж — 2 зони</h3>
+      <p class="muted">Локальна робота над рельєфом і мікроциркуляцією.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Антицелулітний 2 зони" data-desc="Інтенсивні прийоми для покращення трофіки тканин і зменшення проявів «апельсинової шкірки» на вибраних ділянках (стегна, сідниці, живіт).">Локально</button>
+        <button class="chip desc" data-title="Антицелулітний 2 зони" data-desc="Поєднується з домашнім режимом догляду для стабільного ефекту.">Тонізація</button>
+      </div>
+    </div>
+
+    <!-- Антицелулітний 4 зони -->
+    <div class="service">
+      <div class="kicker">50 хв</div>
+      <h3>Антицелулітний масаж — 4 зони</h3>
+      <p class="muted">Розширена програма по тілу — інтенсивніше й глибше.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Антицелулітний 4 зони" data-desc="Комплексне опрацювання проблемних ділянок, лімфодренаж, прискорення обмінних процесів, вирівнювання рельєфу.">Комплекс</button>
+        <button class="chip desc" data-title="Антицелулітний 4 зони" data-desc="Рекомендовано курсом (8–12 сеансів) для вираженого ефекту.">Курс</button>
+      </div>
+    </div>
+
+    <!-- Медовий масаж 2/4 зони -->
+    <div class="service">
+      <div class="kicker">20–40 хв</div>
+      <h3>Медовий масаж — 2 або 4 зони</h3>
+      <p class="muted">Детокс і тонізація шкіри за рахунок медових технік.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Медовий масаж" data-desc="Мед створює ефект «липкого вакууму», покращує мікроциркуляцію та стан шкіри. Обирайте 2 або 4 зони залежно від цілей.">Детокс</button>
+        <button class="chip desc" data-title="Медовий масаж" data-desc="Можливе легке почервоніння — нормальна реакція на активну техніку.">Тонус</button>
+      </div>
+    </div>
+
+    <!-- Лімфодренажний без обличчя -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Лімфодренажний масаж (без обличчя)</h3>
+      <p class="muted">Зменшення набряків, легкість у ногах, прискорення обміну.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Лімфодренажний (без обличчя)" data-desc="М’які ритмічні техніки для запуску лімфовідтоку, покращення детоксикації та зняття перенавантаження з ніг.">Антинабряк</button>
+        <button class="chip desc" data-title="Лімфодренажний (без обличчя)" data-desc="Рекомендовано після перельотів, при схильності до набряків, у програмі схуднення.">Легкі ноги</button>
+      </div>
+    </div>
+
+    <!-- Медова викатка -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Медова викатка + цукровий пілінг</h3>
+      <p class="muted">Викатка скалкою з пілінгом для гладкої та підтягнутої шкіри.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Медова викатка" data-desc="Поєднання механічного впливу скалкою та м’якого пілінгу стимулює мікроциркуляцію та поліпшує рельєф шкіри.">Гладка шкіра</button>
+        <button class="chip desc" data-title="Медова викатка" data-desc="Підходить у міжсезоння як м’який апгрейд для тіла.">Тонус</button>
+      </div>
+    </div>
+
+    <!-- Лімфодренажний з обличчям -->
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Лімфодренажний масаж (з обличчям)</h3>
+      <p class="muted">Дренаж тіла + делікатний догляд обличчя для мінус-набряк.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Лімфодренажний (з обличчям)" data-desc="Додається ручний дренаж обличчя для зняття ранкової набряклості, підкреслення овалу та свіжого вигляду.">Світлий овал</button>
+        <button class="chip desc" data-title="Лімфодренажний (з обличчям)" data-desc="Працюємо м’яко, без болісних відчуттів.">Делікатність</button>
+      </div>
+    </div>
+
+    <!-- Сольовий детокс -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Сольовий детокс</h3>
+      <p class="muted">Сольовий скраб + пропарення з дренажною рідиною.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Сольовий детокс" data-desc="Мінеральний скраб м’яко полірує шкіру, пропарення посилює детокс-ефект і лімфовідтік.">Мінерали</button>
+        <button class="chip desc" data-title="Сольовий детокс" data-desc="Шкіра стає гладкішою, покращується її тон та пружність.">Гладкість</button>
+      </div>
+    </div>
+
+    <!-- Relax масаж -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Relax масаж</h3>
+      <p class="muted">Дуже м’які техніки, глибоке заспокоєння нервової системи.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Relax масаж" data-desc="Повільний темп, довгі лінійні рухи, максимум комфорту. Ідеально після стресових періодів.">Заспокоєння</button>
+        <button class="chip desc" data-title="Relax масаж" data-desc="Покращує сон і загальне самопочуття.">Краще засинання</button>
+      </div>
+    </div>
+
+    <!-- Relax масаж з обличчям -->
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Relax масаж (з обличчям)</h3>
+      <p class="muted">Поглиблений релакс з доглядом обличчя для повної гармонії.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Relax масаж з обличчям" data-desc="Додається легкий масаж обличчя й маска за типом шкіри для сяйва.">Баланс</button>
+        <button class="chip desc" data-title="Relax масаж з обличчям" data-desc="Підходить як ритуал відновлення наприкінці тижня.">Ритуал</button>
+      </div>
+    </div>
+
+    <!-- Креольський масаж -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Креольський масаж</h3>
+      <p class="muted">Ритмічні техніки з використанням бамбукових паличок.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Креольський масаж" data-desc="Бамбукові палички створюють хвилеподібний тиск, глибоко прогріваючи тканини та знімаючи спазм.">Бамбук</button>
+        <button class="chip desc" data-title="Креольський масаж" data-desc="Поєднання тонізації та релаксу — відчуття «легкого тіла».">Тонус+Релакс</button>
+      </div>
+    </div>
+
+    <!-- Динамічний лімфодренаж -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Динамічний лімфодренаж</h3>
+      <p class="muted">Активний дренаж у поєднанні з дихальними техніками.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Динамічний лімфодренаж" data-desc="Поєднання качальних і помпових рухів для запуску лімфовідтоку, зменшення набряків і відчуття важкості.">Лімфофлоу</button>
+        <button class="chip desc" data-title="Динамічний лімфодренаж" data-desc="Рекомендовано як частина програми детоксу/схуднення.">Система</button>
+      </div>
+    </div>
+
+    <!-- Спортивний масаж -->
+    <div class="service">
+      <div class="kicker">1 год</div>
+      <h3>Спортивний масаж</h3>
+      <p class="muted">Відновлення після навантажень, профілактика травм.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Спортивний масаж" data-desc="Інтенсивна робота з м’язами та фасціями, розтягування, профілактика перенапруг і тригерних точок.">Після тренувань</button>
+        <button class="chip desc" data-title="Спортивний масаж" data-desc="Покращує еластичність, прискорює відновлення, готує до стартів.">Підготовка</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МАСАЖІ ОБЛИЧЧЯ -->
+  <h3 style="margin:18px 0 10px;">Масажі обличчя</h3>
+  <div class="grid cols-3">
+    <!-- Класичний обличчя -->
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Масаж обличчя — класичний</h3>
+      <p class="muted">Базовий тонус та розслаблення мімічних м’язів.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Класичний масаж обличчя" data-desc="Поліпшує мікроциркуляцію та колір шкіри, знижує м’язову напругу, допомагає краще засвоювати догляд.">Базовий догляд</button>
+        <button class="chip desc" data-title="Класичний масаж обличчя" data-desc="Рекомендовано як регулярна підтримка тонусу 1–2 рази на тиждень.">Рутина</button>
+      </div>
+    </div>
+
+    <!-- Лімфодренажний обличчя -->
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Масаж обличчя — лімфодренажний</h3>
+      <p class="muted">Зменшення набряклості, легкий овал, свіжа шкіра.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Лімфодренажний масаж обличчя" data-desc="М’які техніки в напрямку лімфовідтоку, зняття «мішечків» і пастозності.">Анти-набряк</button>
+        <button class="chip desc" data-title="Лімфодренажний масаж обличчя" data-desc="Ефект помітний уже після сесії, добре поєднується з масками.">Швидкий ефект</button>
+      </div>
+    </div>
+
+    <!-- Гуаша -->
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Масаж обличчя — гуаша</h3>
+      <p class="muted">Кам’яні скребки для дренажу та рельєфу овалу.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Гуаша" data-desc="Скульптурує овал, розслаблює жувальні м’язи, покращує сяйво. Можливе тимчасове почервоніння.">Скульптуринг</button>
+        <button class="chip desc" data-title="Гуаша" data-desc="Підходить для тьмяної, втомленої шкіри.">Сяйво</button>
+      </div>
+    </div>
+
+    <!-- Міофасціальний обличчя -->
+    <div class="service">
+      <div class="kicker">40 хв</div>
+      <h3>Масаж обличчя — міофасціальний</h3>
+      <p class="muted">Глибша робота з фасціями для тонусу й асиметрій.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Міофасціальний масаж обличчя" data-desc="Опрацювання м’язово-фасціальних ланцюгів, пом’якшення спазмів, робота з асиметріями.">Глибоке розслаблення</button>
+        <button class="chip desc" data-title="Міофасціальний масаж обличчя" data-desc="Комбінується з тейпуванням для пролонгації ефекту.">Комбо</button>
+      </div>
+    </div>
+
+    <!-- Гнатологічна корекція -->
+    <div class="service">
+      <div class="kicker">≈ 40–60 хв</div>
+      <h3>Гнатологічна корекція обличчя</h3>
+      <p class="muted">Робота з жувальними м’язами, скронево-нижньощелепним суглобом.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Гнатологічна корекція" data-desc="Зменшення гіпертонусу жувальних м’язів, полегшення крепітації СНЩС, покращення симетрії нижньої третини.">СНЩС</button>
+        <button class="chip desc" data-title="Гнатологічна корекція" data-desc="Рекомендовано при скреготінні зубами, затисках і головних болях напруження.">Полегшення</button>
+      </div>
+    </div>
+
+    <!-- Моделюючий комплекс обличчя -->
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Моделюючий комплекс для обличчя</h3>
+      <p class="muted">Скульптурування овалу + маска за типом шкіри.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Моделюючий комплекс для обличчя" data-desc="Поєднання ліфтингових і дренажних технік, гуаша/міофасціальні прийоми, завершення доглядовою маскою.">Ліфтинг</button>
+        <button class="chip desc" data-title="Моделюючий комплекс для обличчя" data-desc="Помітний ефект «свіжості» та підтягнутості після першого сеансу.">Вау-ефект</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- КОМПЛЕКСИ ДЛЯ ТІЛА -->
+  <h3 style="margin:18px 0 10px;">Комплекси для тіла</h3>
+  <div class="grid cols-3">
+    <!-- Моделюючий комплекс для тіла -->
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Моделюючий комплекс для тіла</h3>
+      <p class="muted">Антицелулітні техніки, дренаж і тонізація силуету.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Моделюючий комплекс для тіла" data-desc="Комбо технік: антицелулітні прийоми + лімфодренаж + локальна скульптура проблемних зон.">Силует</button>
+        <button class="chip desc" data-title="Моделюючий комплекс для тіла" data-desc="Добре працює курсом у поєднанні з обгортаннями.">Курс</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ДОДАТКОВІ ПРОЦЕДУРИ -->
+  <h3 style="margin:18px 0 10px;">Додаткові процедури</h3>
+  <div class="grid cols-3">
+    <div class="service">
+      <div class="kicker">15 хв</div>
+      <h3>Тейпування (1 зона)</h3>
+      <p class="muted">Кінезіотейпи для підтримки м’язів і зняття навантаження.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Тейпування" data-desc="Фіксація та мікромасаж шкіри тейпом для стабілізації й зняття болю після навантажень.">Підтримка</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Альгінатна маска на обличчя</h3>
+      <p class="muted">Інтенсивне зволоження, ліфтинг, закриття процедури по обличчю.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Альгінатна маска" data-desc="Дає швидкий ефект свіжості, підсилює дію сироваток і масажу.">Зволоження</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Антицелулітне обгортання (гаряче/холодне)</h3>
+      <p class="muted">Опція на вибір для прискорення обміну чи дренажу.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Антицелулітне обгортання" data-desc="Гаряче — активізує кровообіг і ліполіз; холодне — підсилює дренаж і знімає набряк.">Термоефект</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">2 год</div>
+      <h3>Пеленання Arosha + динамічний лімфодренаж</h3>
+      <p class="muted">Професійні бандажі + активний дренаж для фігури.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Arosha + дренаж" data-desc="Профбандажі з активними сироватками + динамічний дренаж для вираженого антинабрякового та моделюючого ефекту.">Профдогляд</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">1 год 30 хв</div>
+      <h3>Пеленання тіла пеловіт</h3>
+      <p class="muted">Мінерально-грязьова терапія для тонусу та детоксу.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Пеленання пеловіт" data-desc="Мінеральні компоненти насичують шкіру та стимулюють її відновлення.">Мінерали</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">30 хв</div>
+      <h3>Фітобочка</h3>
+      <p class="muted">М’яке пропарення травами для релаксу та дренажу.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Фітобочка" data-desc="Трав’яний пар розслабляє, розкриває пори, посилює лімфовідтік. Добре перед масажем.">Трав’яний пар</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">40 хв</div>
+      <h3>Грязеве обгортання всього тіла</h3>
+      <p class="muted">Мінералізація, зняття запалення, покращення рельєфу шкіри.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Грязеве обгортання" data-desc="Насичене мікро- та макроелементами, пом’якшує шкіру й покращує її тон.">Мінералізація</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">—</div>
+      <h3>Постановка голок</h3>
+      <p class="muted">Акупунктурні техніки для зняття напруги та болю.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Постановка голок" data-desc="Точковий вплив тонкими голками на біоактивні точки: знімає спазм і покращує регенерацію.">Акупунктура</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">—</div>
+      <h3>Мікроструми</h3>
+      <p class="muted">М’яка електростимуляція для тонусу й дренажу обличчя.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Мікроструми" data-desc="Покращують тонус м’язів, мікроциркуляцію та роботу лімфи — делікатний ліфтинг-ефект.">Електротонус</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">Додається до сеансу</div>
+      <h3>Додатково до масажу — безкоштовно</h3>
+      <p class="muted">Банки, перкусійний масажер, бамбукові віники, блейди, зволожуюча маска та SPF.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Додатково безкоштовно" data-desc="Індивідуально підбираю інструменти під запит: банки/блейди/віники, маска та SPF — щоб закрити процедуру правильно.">Індивідуально</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPA КОМПЛЕКСИ -->
+  <h3 style="margin:18px 0 10px;">SPA-комплекси</h3>
+  <div class="grid cols-3">
+    <div class="service">
+      <div class="kicker">≈ 2 год</div>
+      <h3>Схуднення з перчинкою</h3>
+      <p class="muted">Антицелулітний (4 зони) + медовий + обгортання + детокс-чаювання.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Схуднення з перчинкою" data-desc="Інтенсивна комбінація технік для прискорення обміну, дренажу й вирівнювання рельєфу — завершуємо чаюванням для м’якого детоксу.">Антицелюліт PRO</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">≈ 2 год</div>
+      <h3>Relax SPA</h3>
+      <p class="muted">Фітобочка + relax масаж з обличчям соєвою свічкою + маска + чаювання.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Relax SPA" data-desc="Глибоке розслаблення з аромаритуалом соєвої свічки, дренажем і доглядом обличчя — максимальний комфорт і заземлення.">Глибокий релакс</button>
+      </div>
+    </div>
+
+    <div class="service">
+      <div class="kicker">≈ 2 год</div>
+      <h3>Сила природи</h3>
+      <p class="muted">Фітобочка + трав’яні мішечки + бамбукові віники + грязеве обгортання + чаювання.</p>
+      <div class="divider"></div>
+      <div class="row">
+        <button class="chip desc" data-title="Сила природи" data-desc="Тепло, аромати трав і мінерали — глибоке розслаблення, детокс і відновлення енергії.">Еко-ритуал</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- СЕРТИФІКАТИ -->
+<section class="card section">
+  <h2>Сертифікати</h2>
+
+  <div class="cert-carousel">
+    <button class="cc-nav cc-prev" aria-label="Попереднє">‹</button>
+    <div class="cc-viewport" aria-roledescription="carousel">
+      <!-- 22 фото -->
+      <figure class="cc-item"><img src="res/cert1.jpg"  alt="Сертифікат 1"></figure>
+      <figure class="cc-item"><img src="res/cert2.jpg"  alt="Сертифікат 2"></figure>
+      <figure class="cc-item"><img src="res/cert3.jpg"  alt="Сертифікат 3"></figure>
+      <figure class="cc-item"><img src="res/cert4.jpg"  alt="Сертифікат 4"></figure>
+      <figure class="cc-item"><img src="res/cert5.jpg"  alt="Сертифікат 5"></figure>
+      <figure class="cc-item"><img src="res/cert6.jpg"  alt="Сертифікат 6"></figure>
+      <figure class="cc-item"><img src="res/cert7.jpg"  alt="Сертифікат 7"></figure>
+      <figure class="cc-item"><img src="res/cert8.jpg"  alt="Сертифікат 8"></figure>
+      <figure class="cc-item"><img src="res/cert9.jpg"  alt="Сертифікат 9"></figure>
+      <figure class="cc-item"><img src="res/cert10.jpg" alt="Сертифікат 10"></figure>
+      <figure class="cc-item"><img src="res/cert11.jpg" alt="Сертифікат 11"></figure>
+      <figure class="cc-item"><img src="res/cert12.jpg" alt="Сертифікат 12"></figure>
+      <figure class="cc-item"><img src="res/cert13.jpg" alt="Сертифікат 13"></figure>
+      <figure class="cc-item"><img src="res/cert14.jpg" alt="Сертифікат 14"></figure>
+      <figure class="cc-item"><img src="res/cert15.jpg" alt="Сертифікат 15"></figure>
+      <figure class="cc-item"><img src="res/cert16.jpg" alt="Сертифікат 16"></figure>
+      <figure class="cc-item"><img src="res/cert17.jpg" alt="Сертифікат 17"></figure>
+      <figure class="cc-item"><img src="res/cert18.jpg" alt="Сертифікат 18"></figure>
+      <figure class="cc-item"><img src="res/cert19.jpg" alt="Сертифікат 19"></figure>
+      <figure class="cc-item"><img src="res/cert20.jpg" alt="Сертифікат 20"></figure>
+
+    </div>
+    <button class="cc-nav cc-next" aria-label="Наступне">›</button>
+  </div>
+</section>
+<div id="fullModal" style="display:none;">
+  <span class="fs-close">&times;</span>
+  <img class="fs-img" src="" alt="">
+  <span class="fs-prev">&#10094;</span>
+  <span class="fs-next">&#10095;</span>
+</div>
+<!-- ВІДЕО РОБОТИ -->
+<section class="card section">
+  <h2>Відео роботи</h2>
+
+  <div class="video-grid">
+    <!-- YouTube приклади: заміни ID -->
+    <button class="video-thumb" data-type="youtube" data-yid="e5JdTlZmzJw" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/e5JdTlZmzJw/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Моделюючий масаж</span>
+  </button>
+     <button class="video-thumb" data-type="youtube" data-yid="0CXw7GVn_UM" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/0CXw7GVn_UM/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">RF-Ліфтинг</span>
+  </button>
+
+<button class="video-thumb" data-type="youtube" data-yid="KdRqxRs-i-4" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/KdRqxRs-i-4/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Тейпування</span>
+  </button>
+  <button class="video-thumb" data-type="youtube" data-yid="P5fu7i4Uy_Q" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/P5fu7i4Uy_Q/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Пінне SPA</span>
+  </button>
+  <button class="video-thumb" data-type="youtube" data-yid="wEO8s2ni6OM" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/wEO8s2ni6OM/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Медова Викатка</span>
+  </button>
+  <button class="video-thumb" data-type="youtube" data-yid="_we803So2ZQ" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/_we803So2ZQ/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">SPA для двох</span>
+    
+  </button>
+    <button class="video-thumb" data-type="youtube" data-yid="WkLMh2jEhA8" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/WkLMh2jEhA8/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Заряд енергії</span>
+  </button>
+    <button class="video-thumb" data-type="youtube" data-yid="axhqClfwi54" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/axhqClfwi54/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Курси масажу</span>
+    </button>
+    <button class="video-thumb" data-type="youtube" data-yid="SVyD_yQJfAs" data-aspect="9x16">
+    <img src="https://img.youtube.com/vi/SVyD_yQJfAs/hqdefault.jpg" alt="Шортс: робота зі спиною">
+    <span class="vt-title">Корекція обличчя</span>
+    </button>
+  </div>
+  
+</section>
+
+<!-- FULLSCREEN відео -->
+<div id="videoModal" hidden>
+  <div class="vm-backdrop"></div>
+  <div class="vm-content card">
+    <button class="vm-close" aria-label="Закрити">×</button>
+    <div class="vm-stage" aria-live="polite" aria-label="Відео перегляд"></div>
+  </div>
+</div>
+
+
+
+    <!-- ВІДГУКИ -->
+    <section id="reviews" class="reviews-section">
+  <h2>Відгуки</h2>
+  <div class="reviews-grid masonry">
+    <img src="res/review1.jpg" alt="Відгук 1" class="review" loading="lazy">
+    <img src="res/review2.jpg" alt="Відгук 2"class="review" loading="lazy">
+    <img src="res/review3.jpg" alt="Відгук 3"class="review" loading="lazy">
+    <img src="res/review4.jpg" alt="Відгук 4"class="review" loading="lazy">
+    <img src="res/review5.jpg" alt="Відгук 5"class="review" loading="lazy">
+    <img src="res/review6.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img src="res/review7.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img src="res/review8.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <img src="res/review9.jpg" alt="Відгук 6"class="review" loading="lazy">
+    <!-- Додавай ще фото -->
+  </div>
+</section>
+
+
+    <!-- КОНТАКТИ -->
+    <section class="card section">
+      <h2>Контакти</h2>
+      <div class="grid cols-2">
+        <div class="contacts">
+          <p><strong>Телефон:</strong> <a href="tel:+380979455498">+380 97 945 54 98</a></p>
+          <p><strong>Telegram:</strong> <a href="https://t.me/+380979455498" target="_blank" rel="noopener">@tvoya_ridna</a></p>
+          <p><strong>Адреса кабінету:</strong> вулиця Василя Порика, 28, Вінниця</p>
+          <div class="divider"></div>
+           </div>
+        <div class="contacts">
+          <!-- Порада: у Google Sites краще додати карту окремим блоком "Карти" або як окремий елемент "Вставити → Карта". -->
+          <div class="kicker">Графік</div>
+          <p class="muted">Пн–Пт: 10:00–19:00 • Сб–Нд: за домовленістю</p>
+          <div class="kicker" style="margin-top:12px;">Підготовка до сеансу</div>
+          <ul class="muted" style="margin:6px 0 0; padding-left:18px;">
+            <li>Гарне самопочуття, останій прийом їжі за 1, 5 години</li>
+            <li>Запис індивідуальної картки з протипоказами на початку візиту</li>
+            <li>Приходити за 5–10 хв до початку</li>
+            <li>Індивідуальна змінна білизна, тапулі видаємо</li>
+          </ul>
+        </div>
+      </div>
+       <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps?q=49.231356,28.404213&hl=uk&z=15&output=embed"
+      width="100%"
+      height="350"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+    </section>
+
+    <p class="footer">© <span id="y"></span> Марчук Аліна • Масажист • Реабілітолог • Психолог</p>
+  </div>
+
+  <script>
+    (function(){
+  const viewport = document.querySelector('.cc-viewport');
+  const items = Array.from(document.querySelectorAll('.cc-item'));
+  const prevBtn = document.querySelector('.cc-prev');
+  const nextBtn = document.querySelector('.cc-next');
+
+  if(!viewport || items.length === 0) return;
+
+  let index = 0; // активний індекс
+
+  // Параметри розстановки «картотеки»
+  const gapX = 120;      // горизонтальний крок між картками
+  const depthZ = 70;     // «занурення» у глибину
+  const tiltZ = 8;       // поворот по осі Z (картотека)
+  const yawY  = 8;       // легкий поворот по осі Y
+  const scaleStep = 0.04;// зменшення сусідів
+
+  function render(){
+    items.forEach((el, i) => {
+      const d = i - index; // відхилення від активної
+      const abs = Math.abs(d);
+
+      // Обмежуємо «віяло», далекі майже непомітні
+      const visible = abs <= 6;
+      el.style.pointerEvents = (abs === 0) ? 'auto' : 'none';
+      el.style.opacity = visible ? (abs === 0 ? 1 : Math.max(0.18, 1 - abs*0.15)) : 0;
+      el.classList.toggle('is-active', abs === 0);
+
+      // Обчислюємо трансформації
+      const x = d * gapX;
+      const z = -abs * depthZ;
+      const rotZ = d === 0 ? 0 : (d < 0 ? -tiltZ : tiltZ); // ліві трохи вліво, праві вправо
+      const rotY = -d * yawY;                              // легкий розворот до центру
+      const sc = Math.max(0.78, 1 - abs * scaleStep);
+
+      el.style.transform =
+        `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${sc})`;
+      el.style.zIndex = String(100 - abs); // щоб активна була зверху
+    });
+  }
+
+  function go(n){
+    index = (n + items.length) % items.length;
+    render();
+  }
+
+  // Навігація
+  prevBtn.addEventListener('click', () => go(index - 1));
+  nextBtn.addEventListener('click', () => go(index + 1));
+
+  // Клік по картці — зробити її активною
+  items.forEach((el, i) => el.addEventListener('click', () => go(i)));
+
+  // Клавіатура
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  go(index - 1);
+    if (e.key === 'ArrowRight') go(index + 1);
+  });
+
+  // Свайп/drag
+  let startX = 0, dragging = false;
+  const onDown = (x) => { dragging = true; startX = x; };
+  const onMove = (x) => {
+    if (!dragging) return;
+    const dx = x - startX;
+    if (Math.abs(dx) > 40){
+      go(index + (dx < 0 ? 1 : -1));
+      dragging = false;
+    }
+  };
+  const onUp = () => dragging = false;
+
+  viewport.addEventListener('mousedown', e => onDown(e.clientX));
+  viewport.addEventListener('mousemove', e => onMove(e.clientX));
+  window.addEventListener('mouseup', onUp);
+
+  viewport.addEventListener('touchstart', e => onDown(e.touches[0].clientX), {passive:true});
+  viewport.addEventListener('touchmove',  e => onMove(e.touches[0].clientX), {passive:true});
+  viewport.addEventListener('touchend', onUp);
+
+  // колесо миші (гортаємо)
+  viewport.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      go(index + (e.deltaY > 0 ? 1 : -1));
+    } else {
+      go(index + (e.deltaX > 0 ? 1 : -1));
+    }
+  }, {passive:true});
+
+  // стартовий рендер
+  render();
+})();
+    // Рік у футері (дозволяється вбудованим HTML Google Sites)
+    document.getElementById('y').textContent = new Date().getFullYear();
+      // Клік по тегу відкриває модалку з описом
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.chip.desc');
+    if (!btn) return;
+    const title = btn.getAttribute('data-title') || 'Опис';
+    const desc = btn.getAttribute('data-desc') || '';
+    const modal = document.getElementById('descModal');
+    document.getElementById('descTitle').textContent = title;
+    document.getElementById('descText').textContent = desc;
+    modal.style.display = 'flex';
+  });
+
+  // Закриття модалки
+  
+  const closeDesc = () => document.getElementById('descModal').style.display = 'none';
+  document.getElementById('closeDesc').addEventListener('click', closeDesc);
+  document.getElementById('descBackdrop').addEventListener('click', closeDesc);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDesc(); });
+  
+  (function(){
+  const viewport = document.querySelector('.cc-viewport');
+  const items = Array.from(document.querySelectorAll('.cc-item'));
+  const prevBtn = document.querySelector('.cc-prev');
+  const nextBtn = document.querySelector('.cc-next');
+
+  let index = 0;
+
+  const gapX = 120, depthZ = 70, tiltZ = 8, yawY = 8, scaleStep = 0.04;
+
+  function render(){
+    items.forEach((el, i) => {
+      const d = i - index;
+      const abs = Math.abs(d);
+      const visible = abs <= 6;
+      el.style.opacity = visible ? 1 - abs*0.15 : 0;
+      el.classList.toggle('is-active', abs === 0);
+      const x = d * gapX;
+      const z = -abs * depthZ;
+      const rotZ = d === 0 ? 0 : (d < 0 ? -tiltZ : tiltZ);
+      const rotY = -d * yawY;
+      const sc = Math.max(0.78, 1 - abs * scaleStep);
+      el.style.transform =
+        `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${sc})`;
+      el.style.zIndex = String(100 - abs);
+    });
+  }
+  function go(n){ index = (n + items.length) % items.length; render(); }
+
+  prevBtn.addEventListener('click', () => go(index - 1));
+  nextBtn.addEventListener('click', () => go(index + 1));
+  items.forEach((el, i) => el.addEventListener('click', () => openFullscreen(i)));
+
+  // Fullscreen logic
+  const modal = document.getElementById('fullModal');
+  const modalImg = modal.querySelector('.fs-img');
+  const closeBtn = modal.querySelector('.fs-close');
+  const fsPrev = modal.querySelector('.fs-prev');
+  const fsNext = modal.querySelector('.fs-next');
+  let fsIndex = 0;
+
+  function openFullscreen(i){
+    fsIndex = i;
+    modalImg.src = items[fsIndex].querySelector('img').src;
+    modal.style.display = 'flex';
+  }
+  function closeFullscreen(){ modal.style.display = 'none'; }
+  function fsGo(delta){
+    fsIndex = (fsIndex + delta + items.length) % items.length;
+    modalImg.src = items[fsIndex].querySelector('img').src;
+  }
+
+  closeBtn.addEventListener('click', closeFullscreen);
+  fsPrev.addEventListener('click', () => fsGo(-1));
+  fsNext.addEventListener('click', () => fsGo(1));
+  document.addEventListener('keydown', (e) => {
+    if (modal.style.display === 'flex'){
+      if (e.key === 'Escape') closeFullscreen();
+      if (e.key === 'ArrowLeft') fsGo(-1);
+      if (e.key === 'ArrowRight') fsGo(1);
+    } else {
+      if (e.key === 'ArrowLeft') go(index - 1);
+      if (e.key === 'ArrowRight') go(index + 1);
+    }
+  });
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeFullscreen(); });
+
+  render();
+})();
+(function(){
+  const thumbs = Array.from(document.querySelectorAll('.video-thumb'));
+  const modal  = document.getElementById('videoModal');
+  const stage  = modal.querySelector('.vm-stage');
+  const close  = modal.querySelector('.vm-close');
+  const back   = modal.querySelector('.vm-backdrop');
+
+  let current = -1; // індекс активного відео
+
+  function openModal(i){
+    current = i;
+    const el = thumbs[i];
+    const type = el.dataset.type;
+    const src  = el.dataset.src;
+    const poster = el.dataset.poster;
+
+    // блокуємо прокрутку фону
+    document.documentElement.style.overflow = 'hidden';
+
+    // очищаємо попередній контент, якщо був
+    stage.innerHTML = '';
+
+    if(type === 'youtube'){
+      // додаємо autoplay та дружні параметри
+      const url = new URL(src);
+      if(!url.searchParams.has('autoplay')) url.searchParams.set('autoplay','1');
+      url.searchParams.set('rel','0');
+      url.searchParams.set('playsinline','1');
+
+      const iframe = document.createElement('iframe');
+      iframe.src = url.toString();
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      stage.appendChild(iframe);
+    } else {
+      // локальне або пряме MP4
+      const video = document.createElement('video');
+      video.src = src;
+      if (poster) video.poster = poster;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      stage.appendChild(video);
+    }
+
+    modal.hidden = false;
+  }
+
+  function closeModal(){
+    modal.hidden = true;
+    stage.innerHTML = '';
+    document.documentElement.style.overflow = ''; // відновлюємо прокрутку
+  }
+
+  thumbs.forEach((btn, i) => {
+    btn.addEventListener('click', () => openModal(i));
+  });
+
+  close.addEventListener('click', closeModal);
+  back.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') { // попереднє
+      const prev = (current - 1 + thumbs.length) % thumbs.length;
+      openModal(prev);
+    }
+    if (e.key === 'ArrowRight') { // наступне
+      const next = (current + 1) % thumbs.length;
+      openModal(next);
+    }
+  });
+})();
+(function(){
+  const thumbs = Array.from(document.querySelectorAll('.video-thumb'));
+  const modal  = document.getElementById('videoModal');
+  const stage  = modal.querySelector('.vm-stage');
+  const close  = modal.querySelector('.vm-close');
+  const back   = modal.querySelector('.vm-backdrop');
+  let current = -1;
+
+  function buildYouTubeEmbed(id){
+    const base = `https://www.youtube.com/embed/${id}`;
+    const params = new URLSearchParams({
+      autoplay: '1',
+      playsinline: '1',
+      modestbranding: '1',
+      rel: '0',
+      iv_load_policy: '3'
+    });
+    return `${base}?${params.toString()}`;
+  }
+
+  function openModal(i){
+    current = i;
+    const el = thumbs[i];
+    const type = el.dataset.type;
+    const aspect = el.dataset.aspect || '16x9';
+    const poster = el.dataset.poster;
+
+    // Блокуємо прокрутку фону
+    document.documentElement.style.overflow = 'hidden';
+    // Чистимо сцену
+    stage.innerHTML = '';
+    stage.classList.toggle('is-vertical', aspect === '9x16');
+
+    if(type === 'youtube'){
+      const yid = el.dataset.yid;
+      const iframe = document.createElement('iframe');
+      iframe.src = buildYouTubeEmbed(yid);
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      stage.appendChild(iframe);
+    } else {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      if (poster) video.poster = poster;
+      video.src = el.dataset.src;
+      stage.appendChild(video);
+    }
+
+    modal.hidden = false;
+  }
+
+  function closeModal(){
+    modal.hidden = true;
+    stage.innerHTML = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  thumbs.forEach((btn, i) => btn.addEventListener('click', () => openModal(i)));
+  close.addEventListener('click', closeModal);
+  back.addEventListener('click', closeModal);
+
+  // Клавіші
+  document.addEventListener('keydown', (e) => {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') closeModal();
+  });
+})();
+  </script>
+</body>
+</html>
