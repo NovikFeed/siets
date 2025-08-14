@@ -266,24 +266,65 @@
   box-shadow: var(--shadow);
   break-inside: avoid;
 }
+@media (max-width: 900px){
+  .hero{ text-align:center; }
+  .hero .portrait{
+    margin: 0 auto;              /* центрує блок */
+    justify-self: center;        /* якщо grid */
+    max-width: 420px;            /* опційно: звузити на мобілці */
+  }
+}
+@media (max-width: 640px){
+  body{ overflow-x: hidden; }               /* перестраховка від горизонтального скролу */
+
+  .cert-carousel{
+    padding: 10px 12px;                     /* менші поля */
+    overflow: hidden;                        /* обрізаємо все зайве всередині секції */
+  }
+
+  .cc-viewport{
+    height: clamp(150px, 42vw, 220px);      /* нижча сцена */
+    transform: scale(.92);                   /* трохи зменшуємо всю сцену */
+    transform-origin: left center;           /* і злегка «тиснемо» вліво */
+  }
+
+  .cc-item{
+    left: 50%;                               /* центрування відносно сцени */
+    width: min(62vw, 210px);                 /* менші картки */
+    height: calc(min(62vw, 210px) * 0.7);
+  }
+
+  .cc-nav{ width:34px; height:34px; font-size:18px; } /* компактні стрілки */
+}
+.vm-content{ width: min(1200px, 98vw); }
+.vm-stage{
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:86vh;
+  transform:none;          /* ← прибираємо scale(0.5) */
+}
+.vm-stage.is-vertical{ aspect-ratio:9/16; max-height:90vh; }
+
+@media (max-width:640px){
+  .vm-content{ width:96vw; }
+  .vm-stage{ max-height:80vh; }
+}
 
 
 </style>
 
 </head>
-<!-- MODAL: опис процедури -->
-<div id="descModal" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:20px; z-index:50;">
-  <div id="descBackdrop" style="position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(2px);"></div>
-  <div class="card" style="position:relative; max-width:640px; width:100%; padding:20px;">
-    <h3 id="descTitle" style="margin:0 32px 6px 0; font-size:22px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></h3>
-    <p id="descText" class="muted" style="margin:0 0 12px;"></p>
-    <div class="row">
-      <button id="closeDesc" class="btn" aria-label="Закрити">Закрити</button>
-    </div>
-  </div>
-</div>
-
-<body>
+<script>
+(function () {
+  const BP = 900;
+  const isMobile = Math.min(window.innerWidth, screen.width) <= BP;
+  if (isMobile) {
+    document.querySelectorAll('details.acc').forEach(d => d.removeAttribute('open'));
+  }
+  document.body.classList.remove('details-prep');
+})();
+</script>
+<body class="details-prep">
   <div class="wrap">
     <!-- HERO -->
     <section class="card hero">
@@ -899,7 +940,6 @@
   </div>
 </div>
 
-
 <!-- БЛАКИТНА ЛАГУНА (фітобочка, мінеральний скраб, таласотерапія, водоростеве зволоження, чаювання) -->
 <div class="service">
   <div class="kicker">≈ 2 год</div>
@@ -1093,379 +1133,261 @@
 
     <p class="footer">© <span id="y"></span> Марчук Аліна • Масажист • Реабілітолог • Психолог</p>
   </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Рік у футері
+  const y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
 
-  <script>
-    (function(){
-  const viewport = document.querySelector('.cc-viewport');
-  const items = Array.from(document.querySelectorAll('.cc-item'));
-  const prevBtn = document.querySelector('.cc-prev');
-  const nextBtn = document.querySelector('.cc-next');
-
-  if(!viewport || items.length === 0) return;
-
-  let index = 0; // активний індекс
-
-  // Параметри розстановки «картотеки»
-  const gapX = 120;      // горизонтальний крок між картками
-  const depthZ = 70;     // «занурення» у глибину
-  const tiltZ = 8;       // поворот по осі Z (картотека)
-  const yawY  = 8;       // легкий поворот по осі Y
-  const scaleStep = 0.04;// зменшення сусідів
-
-  function render(){
-    items.forEach((el, i) => {
-      const d = i - index; // відхилення від активної
-      const abs = Math.abs(d);
-
-      // Обмежуємо «віяло», далекі майже непомітні
-      const visible = abs <= 6;
-      el.style.pointerEvents = (abs === 0) ? 'auto' : 'none';
-      el.style.opacity = visible ? (abs === 0 ? 1 : Math.max(0.18, 1 - abs*0.15)) : 0;
-      el.classList.toggle('is-active', abs === 0);
-
-      // Обчислюємо трансформації
-      const x = d * gapX;
-      const z = -abs * depthZ;
-      const rotZ = d === 0 ? 0 : (d < 0 ? -tiltZ : tiltZ); // ліві трохи вліво, праві вправо
-      const rotY = -d * yawY;                              // легкий розворот до центру
-      const sc = Math.max(0.78, 1 - abs * scaleStep);
-
-      el.style.transform =
-        `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${sc})`;
-      el.style.zIndex = String(100 - abs); // щоб активна була зверху
-    });
-  }
-
-  function go(n){
-    index = (n + items.length) % items.length;
-    render();
-  }
-
-  // Навігація
-  prevBtn.addEventListener('click', () => go(index - 1));
-  nextBtn.addEventListener('click', () => go(index + 1));
-
-  // Клік по картці — зробити її активною
-  items.forEach((el, i) => el.addEventListener('click', () => go(i)));
-
-  // Клавіатура
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft')  go(index - 1);
-    if (e.key === 'ArrowRight') go(index + 1);
-  });
-
-  // Свайп/drag
-  let startX = 0, dragging = false;
-  const onDown = (x) => { dragging = true; startX = x; };
-  const onMove = (x) => {
-    if (!dragging) return;
-    const dx = x - startX;
-    if (Math.abs(dx) > 40){
-      go(index + (dx < 0 ? 1 : -1));
-      dragging = false;
-    }
-  };
-  const onUp = () => dragging = false;
-
-  viewport.addEventListener('mousedown', e => onDown(e.clientX));
-  viewport.addEventListener('mousemove', e => onMove(e.clientX));
-  window.addEventListener('mouseup', onUp);
-
-  viewport.addEventListener('touchstart', e => onDown(e.touches[0].clientX), {passive:true});
-  viewport.addEventListener('touchmove',  e => onMove(e.touches[0].clientX), {passive:true});
-  viewport.addEventListener('touchend', onUp);
-
-  // колесо миші (гортаємо)
-  viewport.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      go(index + (e.deltaY > 0 ? 1 : -1));
-    } else {
-      go(index + (e.deltaX > 0 ? 1 : -1));
-    }
-  }, {passive:true});
-
-  // стартовий рендер
-  render();
-})();
-    // Рік у футері (дозволяється вбудованим HTML Google Sites)
-    document.getElementById('y').textContent = new Date().getFullYear();
-      // Клік по тегу відкриває модалку з описом
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.chip.desc');
-    if (!btn) return;
-    const title = btn.getAttribute('data-title') || 'Опис';
-    const desc = btn.getAttribute('data-desc') || '';
-    const modal = document.getElementById('descModal');
-    document.getElementById('descTitle').textContent = title;
-    document.getElementById('descText').textContent = desc;
-    modal.style.display = 'flex';
-  });
-
-  // Закриття модалки
-  
-  const closeDesc = () => document.getElementById('descModal').style.display = 'none';
-  document.getElementById('closeDesc').addEventListener('click', closeDesc);
-  document.getElementById('descBackdrop').addEventListener('click', closeDesc);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDesc(); });
-  
-  (function(){
-  const viewport = document.querySelector('.cc-viewport');
-  const items = Array.from(document.querySelectorAll('.cc-item'));
-  const prevBtn = document.querySelector('.cc-prev');
-  const nextBtn = document.querySelector('.cc-next');
-
-  let index = 0;
-
-  const gapX = 120, depthZ = 70, tiltZ = 8, yawY = 8, scaleStep = 0.04;
-
-  function render(){
-    items.forEach((el, i) => {
-      const d = i - index;
-      const abs = Math.abs(d);
-      const visible = abs <= 6;
-      el.style.opacity = visible ? 1 - abs*0.15 : 0;
-      el.classList.toggle('is-active', abs === 0);
-      const x = d * gapX;
-      const z = -abs * depthZ;
-      const rotZ = d === 0 ? 0 : (d < 0 ? -tiltZ : tiltZ);
-      const rotY = -d * yawY;
-      const sc = Math.max(0.78, 1 - abs * scaleStep);
-      el.style.transform =
-        `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${sc})`;
-      el.style.zIndex = String(100 - abs);
-    });
-  }
-  function go(n){ index = (n + items.length) % items.length; render(); }
-
-  prevBtn.addEventListener('click', () => go(index - 1));
-  nextBtn.addEventListener('click', () => go(index + 1));
-  items.forEach((el, i) => el.addEventListener('click', () => openFullscreen(i)));
-
-  // Fullscreen logic
-  const modal = document.getElementById('fullModal');
-  const modalImg = modal.querySelector('.fs-img');
-  const closeBtn = modal.querySelector('.fs-close');
-  const fsPrev = modal.querySelector('.fs-prev');
-  const fsNext = modal.querySelector('.fs-next');
-  let fsIndex = 0;
-
-  function openFullscreen(i){
-    fsIndex = i;
-    modalImg.src = items[fsIndex].querySelector('img').src;
-    modal.style.display = 'flex';
-  }
-  function closeFullscreen(){ modal.style.display = 'none'; }
-  function fsGo(delta){
-    fsIndex = (fsIndex + delta + items.length) % items.length;
-    modalImg.src = items[fsIndex].querySelector('img').src;
-  }
-
-  closeBtn.addEventListener('click', closeFullscreen);
-  fsPrev.addEventListener('click', () => fsGo(-1));
-  fsNext.addEventListener('click', () => fsGo(1));
-  document.addEventListener('keydown', (e) => {
-    if (modal.style.display === 'flex'){
-      if (e.key === 'Escape') closeFullscreen();
-      if (e.key === 'ArrowLeft') fsGo(-1);
-      if (e.key === 'ArrowRight') fsGo(1);
-    } else {
-      if (e.key === 'ArrowLeft') go(index - 1);
-      if (e.key === 'ArrowRight') go(index + 1);
-    }
-  });
-  modal.addEventListener('click', (e) => { if (e.target === modal) closeFullscreen(); });
-
-  render();
-})();
-(function(){
-  const thumbs = Array.from(document.querySelectorAll('.video-thumb'));
-  const modal  = document.getElementById('videoModal');
-  const stage  = modal.querySelector('.vm-stage');
-  const close  = modal.querySelector('.vm-close');
-  const back   = modal.querySelector('.vm-backdrop');
-
-  let current = -1; // індекс активного відео
-
-  function openModal(i){
-    current = i;
-    const el = thumbs[i];
-    const type = el.dataset.type;
-    const src  = el.dataset.src;
-    const poster = el.dataset.poster;
-
-    // блокуємо прокрутку фону
-    document.documentElement.style.overflow = 'hidden';
-
-    // очищаємо попередній контент, якщо був
-    stage.innerHTML = '';
-
-    if(type === 'youtube'){
-      // додаємо autoplay та дружні параметри
-      const url = new URL(src);
-      if(!url.searchParams.has('autoplay')) url.searchParams.set('autoplay','1');
-      url.searchParams.set('rel','0');
-      url.searchParams.set('playsinline','1');
-
-      const iframe = document.createElement('iframe');
-      iframe.src = url.toString();
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      iframe.allowFullscreen = true;
-      stage.appendChild(iframe);
-    } else {
-      // локальне або пряме MP4
-      const video = document.createElement('video');
-      video.src = src;
-      if (poster) video.poster = poster;
-      video.controls = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      stage.appendChild(video);
-    }
-
-    modal.hidden = false;
-  }
-
-  function closeModal(){
-    modal.hidden = true;
-    stage.innerHTML = '';
-    document.documentElement.style.overflow = ''; // відновлюємо прокрутку
-  }
-
-  thumbs.forEach((btn, i) => {
-    btn.addEventListener('click', () => openModal(i));
-  });
-
-  close.addEventListener('click', closeModal);
-  back.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (modal.hidden) return;
-    if (e.key === 'Escape') closeModal();
-    if (e.key === 'ArrowLeft') { // попереднє
-      const prev = (current - 1 + thumbs.length) % thumbs.length;
-      openModal(prev);
-    }
-    if (e.key === 'ArrowRight') { // наступне
-      const next = (current + 1) % thumbs.length;
-      openModal(next);
-    }
-  });
-})();
-(function(){
-  const thumbs = Array.from(document.querySelectorAll('.video-thumb'));
-  const modal  = document.getElementById('videoModal');
-  const stage  = modal.querySelector('.vm-stage');
-  const close  = modal.querySelector('.vm-close');
-  const back   = modal.querySelector('.vm-backdrop');
-  let current = -1;
-
-  function buildYouTubeEmbed(id){
-    const base = `https://www.youtube.com/embed/${id}`;
-    const params = new URLSearchParams({
-      autoplay: '1',
-      playsinline: '1',
-      modestbranding: '1',
-      rel: '0',
-      iv_load_policy: '3'
-    });
-    return `${base}?${params.toString()}`;
-  }
-
-  function openModal(i){
-    current = i;
-    const el = thumbs[i];
-    const type = el.dataset.type;
-    const aspect = el.dataset.aspect || '16x9';
-    const poster = el.dataset.poster;
-
-    // Блокуємо прокрутку фону
-    document.documentElement.style.overflow = 'hidden';
-    // Чистимо сцену
-    stage.innerHTML = '';
-    stage.classList.toggle('is-vertical', aspect === '9x16');
-
-    if(type === 'youtube'){
-      const yid = el.dataset.yid;
-      const iframe = document.createElement('iframe');
-      iframe.src = buildYouTubeEmbed(yid);
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      stage.appendChild(iframe);
-    } else {
-      const video = document.createElement('video');
-      video.controls = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      if (poster) video.poster = poster;
-      video.src = el.dataset.src;
-      stage.appendChild(video);
-    }
-
-    modal.hidden = false;
-  }
-
-  function closeModal(){
-    modal.hidden = true;
-    stage.innerHTML = '';
-    document.documentElement.style.overflow = '';
-  }
-
-  thumbs.forEach((btn, i) => btn.addEventListener('click', () => openModal(i)));
-  close.addEventListener('click', closeModal);
-  back.addEventListener('click', closeModal);
-
-  // Клавіші
-  document.addEventListener('keydown', (e) => {
-    if (modal.hidden) return;
-    if (e.key === 'Escape') closeModal();
-  });
-})();
-(function(){
-  // Авто-відкриття/закриття акордеонів залежно від ширини
-  const ACC_BREAKPOINT = 900;
+  // ===== На мобілці всі <details> закриті спочатку; на десктопі — відкриті
+  const ACC_BP = 900;
   const accs = Array.from(document.querySelectorAll('details.acc'));
-
-  function applyAccordionMode(){
-    const isMobile = window.innerWidth <= ACC_BREAKPOINT;
-    accs.forEach(d => {
-      if (isMobile) {
-        // якщо не взаємодіяли — схлопнемо
-        if (!d.dataset.touched) d.removeAttribute('open');
-      } else {
-        d.setAttribute('open','');
-      }
-    });
+  function syncAccordions() {
+    const isMobile = window.innerWidth <= ACC_BP;
+    accs.forEach(d => isMobile ? d.removeAttribute('open') : d.setAttribute('open',''));
   }
+  syncAccordions();
+  window.addEventListener('resize', syncAccordions);
+  window.addEventListener('orientationchange', syncAccordions);
 
-  accs.forEach(d => {
-    d.addEventListener('toggle', () => d.dataset.touched = '1'); // позначаємо, що юзер взаємодіяв
-  });
-
-  window.addEventListener('resize', applyAccordionMode);
-  window.addEventListener('orientationchange', applyAccordionMode);
-  applyAccordionMode();
-
-  // --- Уніфіковане вмикання модалок (якщо десь inline-стилі заважали центруванню) ---
-  // ОПИС ПРОЦЕДУР
+  // ===== Модалка опису процедур (клік по .chip.desc)
   const descModal = document.getElementById('descModal');
-  if (descModal){
-    // коли відкриваєш — ставимо display:flex
+  if (descModal) {
+    const closeDesc = () => descModal.style.display = 'none';
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('.chip.desc');
       if (!btn) return;
+      document.getElementById('descTitle').textContent = btn.dataset.title || 'Опис';
+      document.getElementById('descText').textContent  = btn.dataset.desc || '';
       descModal.style.display = 'flex';
     });
-    // закриття вже є у твоєму коді — він просто міняє display:none
+    document.getElementById('closeDesc')?.addEventListener('click', closeDesc);
+    document.getElementById('descBackdrop')?.addEventListener('click', closeDesc);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDesc(); });
   }
 
-  // СЕРТИФІКАТИ fullModal — якщо у тебе був інший display
-  const fullModal = document.getElementById('fullModal');
-  if (fullModal){
-    // приклад: при відкритті додай клас .show, при закритті — прибери
-    // (якщо ти вже робиш це в існуючому коді — залиш все як є)
-  }
-})();
-  </script>
+  // ===== Відео-модалка (мініатюри → fullscreen з градієнтом теми)
+  (function(){
+    const thumbs = Array.from(document.querySelectorAll('.video-thumb'));
+    const modal  = document.getElementById('videoModal');
+    if (!thumbs.length || !modal) return;
+    const stage  = modal.querySelector('.vm-stage');
+    const close  = modal.querySelector('.vm-close');
+    const back   = modal.querySelector('.vm-backdrop');
+    let current = -1;
+
+    const yt = id => `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3`;
+
+    function openModal(i){
+      current = i;
+      const el = thumbs[i];
+      const type = el.dataset.type;
+      const aspect = el.dataset.aspect || '16x9';
+
+      document.documentElement.style.overflow = 'hidden';
+      stage.innerHTML = '';
+      stage.classList.toggle('is-vertical', aspect === '9x16');
+
+      if (type === 'youtube'){
+        const iframe = document.createElement('iframe');
+        iframe.src = yt(el.dataset.yid);
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.setAttribute('allowfullscreen','');
+        iframe.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+        stage.appendChild(iframe);
+      } else {
+        const video = document.createElement('video');
+        video.controls = true; video.autoplay = true; video.playsInline = true;
+        if (el.dataset.poster) video.poster = el.dataset.poster;
+        video.src = el.dataset.src;
+        stage.appendChild(video);
+      }
+
+      modal.hidden = false;
+    }
+    function closeModal(){
+      modal.hidden = true;
+      stage.innerHTML = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    thumbs.forEach((btn, i) => btn.addEventListener('click', () => openModal(i)));
+    close?.addEventListener('click', closeModal);
+    back?.addEventListener('click',  closeModal);
+    document.addEventListener('keydown', (e) => { if (!modal.hidden && e.key === 'Escape') closeModal(); });
+  })();
+
+  // ===== Карусель сертифікатів (єдина версія, без глобальних змінних)
+  (function(){
+    const root = document.querySelector('.cert-carousel');
+    if (!root) return;
+    const viewport = root.querySelector('.cc-viewport');
+    const items    = Array.from(root.querySelectorAll('.cc-item'));
+    const prevBtn  = root.querySelector('.cc-prev');
+    const nextBtn  = root.querySelector('.cc-next');
+    if (!viewport || !items.length) return;
+
+    let index = 0;
+    let gapX = 120, depthZ = 70, tiltZ = 8, yawY = 8, scaleStep = 0.04;
+    const VISIBLE_RADIUS = 1; // центр + 1 ліворуч/праворуч
+
+    function setResponsive(){
+      const w = window.innerWidth;
+      if (w <= 640){ gapX = 76; depthZ = 48; tiltZ = 5; yawY = 5; }
+      else if (w <= 900){ gapX = 105; depthZ = 65; tiltZ = 7; yawY = 7; }
+      else { gapX = 120; depthZ = 70; tiltZ = 8; yawY = 8; }
+    }
+
+    function render(){
+      const N = items.length;
+      items.forEach((el, i) => {
+        // кругова відстань
+        let d = i - index;
+        if (d >  N/2) d -= N;
+        if (d < -N/2) d += N;
+        const abs = Math.abs(d);
+        const visible = abs <= VISIBLE_RADIUS;
+
+        el.style.opacity = visible ? (abs === 0 ? 1 : 0.9) : 0;
+        el.style.pointerEvents = visible ? 'auto' : 'none';
+        el.classList.toggle('is-active', abs === 0);
+
+        const x = d * gapX;
+        const z = -abs * depthZ;
+        const rotZ = d === 0 ? 0 : (d < 0 ? -tiltZ : tiltZ);
+        const rotY = -d * yawY;
+        const sc = Math.max(0.82, 1 - abs * scaleStep);
+        el.style.transform =
+          `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${sc})`;
+        el.style.zIndex = String(100 - abs);
+      });
+    }
+
+    function go(n){ index = (n + items.length) % items.length; render(); }
+
+    // кнопки
+    prevBtn?.addEventListener('click', () => go(index - 1));
+    nextBtn?.addEventListener('click', () => go(index + 1));
+
+    // клік по картці = перехід до неї
+    items.forEach((el, i) => {
+  el.addEventListener('click', () => {
+    // якщо вже активна картка — лайтбокс відкриється через код вище
+    // якщо НЕ активна — зробимо її центральною
+    if (!el.classList.contains('is-active')) {
+      go(i);
+    }
+  });
+});
+
+    // клавіатура (тільки коли секція у фокусі)
+    root.setAttribute('tabindex','0');
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  go(index - 1);
+      if (e.key === 'ArrowRight') go(index + 1);
+    });
+
+    // свайп/drag усередині viewport
+    let sx = 0, dragging = false;
+    viewport.addEventListener('pointerdown', e => { dragging = true; sx = e.clientX; });
+    window.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 40){ go(index + (dx < 0 ? 1 : -1)); dragging = false; }
+    });
+    window.addEventListener('pointerup', () => dragging = false);
+
+    // колесо миші
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      go(index + ((e.deltaY > 0 || e.deltaX > 0) ? 1 : -1));
+    }, {passive:false});
+
+    setResponsive(); render();
+    window.addEventListener('resize', () => { setResponsive(); render(); });
+    window.addEventListener('orientationchange', () => { setResponsive(); render(); });
+  })();
+});
+document.addEventListener('DOMContentLoaded', () => {
+  // === Глобальний лайтбокс для зображень (сертифікати + відгуки)
+  (function(){
+    const modal = document.getElementById('fullModal');
+    if (!modal) return;
+    const imgEl  = modal.querySelector('.fs-img');
+    const btnX   = modal.querySelector('.fs-close');
+    const btnPrv = modal.querySelector('.fs-prev');
+    const btnNxt = modal.querySelector('.fs-next');
+
+    let list = [];   // поточний список <img>
+    let idx  = 0;    // індекс у списку
+
+    function show(){ if(list[idx]) imgEl.src = list[idx].src; }
+    function open(groupSelector, i){
+      list = Array.from(document.querySelectorAll(groupSelector));
+      idx  = Math.max(0, Math.min(i, list.length - 1));
+      show();
+      modal.style.display = 'flex';
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function close(){
+      modal.style.display = 'none';
+      document.documentElement.style.overflow = '';
+    }
+    function move(d){ idx = (idx + d + list.length) % list.length; show(); }
+
+    // кліки по прев/некст/бекдроп/хрестик
+    btnX?.addEventListener('click', close);
+    btnPrv?.addEventListener('click', () => move(-1));
+    btnNxt?.addEventListener('click', () => move(1));
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => {
+      if (modal.style.display !== 'flex') return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft')  move(-1);
+      if (e.key === 'ArrowRight') move(1);
+    });
+
+    // ==== ПІДВ’ЯЗКА ГРУП ====
+    // 1) Сертифікати: відкривати по кліку на ЦЕНТРАЛЬНУ картку,
+    //    а по кліку на бічні — спершу зробити її центральною
+    (function(){
+      const root = document.querySelector('.cert-carousel');
+      if (!root) return;
+      const items = Array.from(root.querySelectorAll('.cc-item'));
+      // цей хелпер шукає "активний" елемент (той, що по центру)
+      const isActive = el => el.classList.contains('is-active');
+
+      items.forEach((el, i) => {
+        el.addEventListener('click', (e) => {
+          // якщо картка вже в центрі — відкриваємо лайтбокс по всім сертифікатам
+          if (isActive(el)) {
+            open('.cert-carousel .cc-item img', i);
+          } else {
+            // інакше — даємо відпрацювати твоєму handler’у каруселі (перехід до цієї картки)
+            // нічого не робимо тут
+          }
+        });
+      });
+    })();
+
+    // 2) Відгуки: простий клік по фото
+    Array.from(document.querySelectorAll('.reviews-grid img'))
+      .forEach((el, i) => el.addEventListener('click', () => open('.reviews-grid img', i)));
+
+    // Robusta: виводимо open у window, якщо треба викликати з інших місць
+    window.__openImageLightbox = open;
+  })();
+});
+</script>
+  <div id="descModal" style="position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:20px; z-index:50;">
+  <div id="descBackdrop" style="position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(2px);"></div>
+  <div class="card" style="position:relative; max-width:640px; width:100%; padding:20px;">
+    <h3 id="descTitle" style="margin:0 32px 6px 0; font-size:22px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"></h3>
+    <p id="descText" class="muted" style="margin:0 0 12px;"></p>
+    <div class="row">
+      <button id="closeDesc" class="btn" aria-label="Закрити">Закрити</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
